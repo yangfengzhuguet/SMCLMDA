@@ -1,0 +1,884 @@
+1 "ACTH-Secreting Pituitary Adenoma"
+2 "Abortion, Septic"
+3 "Acquired Immunodeficiency Syndrome"
+4 Acromegaly
+5 "Acute Coronary Syndrome"
+6 "Acute Disease"
+7 "Acute Kidney Injury"
+8 "Addison Disease"
+9 Adenocarcinoma
+10 "Adenocarcinoma in Situ"
+11 "Adenocarcinoma of Lung"
+12 Adenoma
+13 "Adenoma, Pleomorphic"
+14 "Adenomatous Polyposis Coli"
+15 "Adrenal Cortex Neoplasms"
+16 "Adrenocortical Adenoma"
+17 "Adrenocortical Carcinoma"
+18 Adrenoleukodystrophy
+19 Agammaglobulinemia
+20 "Aggressive Periodontitis"
+21 Albuminuria
+22 Alopecia
+23 "Alopecia Areata"
+24 "Alstrom Syndrome"
+25 "Alzheimer Disease"
+26 Amebiasis
+27 Ameloblastoma
+28 "Amelogenesis Imperfecta"
+29 Amnesia
+30 Amyloidosis
+31 "Amyotrophic Lateral Sclerosis"
+32 Anemia
+33 "Anemia, Aplastic"
+34 "Anemia, Diamond-Blackfan"
+35 "Anemia, Iron-Deficiency"
+36 "Anemia, Neonatal"
+37 "Anemia, Refractory, with Excess of Blasts"
+38 "Anemia, Sickle Cell"
+39 Aneurysm
+40 "Angelman Syndrome"
+41 "Angina Pectoris, Variant"
+42 Aniridia
+43 Anodontia
+44 "Anorectal Malformations"
+45 Anovulation
+46 "Antiphospholipid Syndrome"
+47 "Aortic Aneurysm"
+48 "Aortic Aneurysm, Abdominal"
+49 "Aortic Aneurysm, Thoracic"
+50 "Aortic Diseases"
+51 "Aortic Dissection"
+52 "Aortic Valve Disease"
+53 "Aortic Valve Insufficiency"
+54 "Aortic Valve Stenosis"
+55 "Aphasia, Primary Progressive"
+56 "Arrhythmogenic Right Ventricular Dysplasia"
+57 Arteriosclerosis
+58 "Arteriosclerosis Obliterans"
+59 "Arteriovenous Fistula"
+60 Arthritis
+61 "Arthritis, Gouty"
+62 "Arthritis, Psoriatic"
+63 "Arthritis, Rheumatoid"
+64 Aspergillosis
+65 "Aspergillosis, Allergic Bronchopulmonary"
+66 Asthma
+67 Astrocytoma
+68 "Ataxia Telangiectasia"
+69 Atherosclerosis
+70 "Atrial Fibrillation"
+71 "Autoimmune Diseases"
+72 "Autoimmune Diseases of the Nervous System"
+73 "Autoimmune Lymphoproliferative Syndrome"
+74 Azoospermia
+75 "Bardet-Biedl Syndrome "
+76 "Barrett Esophagus"
+77 "Benign Paroxysmal Positional Vertigo"
+78 "Bicuspid Aortic Valve Disease"
+79 "Biliary Atresia"
+80 "Biliary Tract Neoplasms"
+81 "Birt-Hogg-Dube Syndrome"
+82 "Blind Loop Syndrome"
+83 "Blood Coagulation Disorders"
+84 "Blood Platelet Disorders"
+85 "Bloom Syndrome"
+86 "Bone Diseases"
+87 "Bone Neoplasms"
+88 "Borna Disease"
+89 "Brain Diseases"
+90 "Brain Edema"
+91 "Brain Infarction"
+92 "Brain Injury, Chronic"
+93 "Brain Ischemia"
+94 "Brain Neoplasms"
+95 "Breast Diseases"
+96 "Breast Neoplasms"
+97 "Bronchial Diseases"
+98 "Bronchiolitis Obliterans"
+99 "Bronchiolitis Obliterans Syndrome"
+100 Bronchopneumonia
+101 "Bronchopulmonary Dysplasia"
+102 Brucellosis
+103 "Brugada Syndrome"
+104 "Budd-Chiari Syndrome"
+105 "Burkitt Lymphoma"
+106 COVID-19
+107 "CREST Syndrome"
+108 Calcinosis
+109 "Canavan Disease"
+110 Carcinoma
+111 "Carcinoma in Situ"
+112 "Carcinoma, Adenoid Cystic"
+113 "Carcinoma, Basal Cell"
+114 "Carcinoma, Ductal, Breast"
+115 "Carcinoma, Embryonal"
+116 "Carcinoma, Endometrioid"
+117 "Carcinoma, Hepatocellular"
+118 "Carcinoma, Merkel Cell"
+119 "Carcinoma, Mucoepidermoid"
+120 "Carcinoma, Non-Small-Cell Lung"
+121 "Carcinoma, Ovarian Epithelial"
+122 "Carcinoma, Pancreatic Ductal"
+123 "Carcinoma, Renal Cell"
+124 "Carcinoma, Small Cell"
+125 "Carcinoma, Squamous Cell"
+126 "Carcinoma, Transitional Cell"
+127 Carcinosarcoma
+128 Cardiomyopathies
+129 "Cardiomyopathy, Alcoholic"
+130 "Cardiomyopathy, Dilated"
+131 "Cardiomyopathy, Hypertrophic"
+132 "Cardiomyopathy, Hypertrophic, Familial"
+133 "Cardiovascular Diseases"
+134 "Carotid Artery Diseases"
+135 "Carotid Stenosis"
+136 "Cartilage Diseases"
+137 Cataract
+138 "Celiac Disease"
+139 "Central Nervous System Diseases"
+140 "Central Nervous System Neoplasms"
+141 "Cerebral Infarction"
+142 "Cerebral Palsy"
+143 "Cerebral Small Vessel Diseases"
+144 "Cerebrovascular Disorders"
+145 "Chagas Disease"
+146 "Charcot-Marie-Tooth Disease"
+147 "Chediak-Higashi Syndrome"
+148 "Chlamydia Infections"
+149 Cholangiocarcinoma
+150 Choledocholithiasis
+151 Cholelithiasis
+152 Cholera
+153 Cholestasis
+154 "Cholestasis, Intrahepatic"
+155 Cholesteatoma
+156 "Cholesteatoma, Middle Ear"
+157 Chondrocalcinosis
+158 Chondrosarcoma
+159 Chordoma
+160 Chorea
+161 Chorioamnionitis
+162 Choriocarcinoma
+163 "Choroidal Neovascularization"
+164 "Chronic Limb-Threatening Ischemia"
+165 "Chronic Periodontitis"
+166 "Chronic Urticaria"
+167 "Ciliary Motility Disorders"
+168 Citrullinemia
+169 "Cleft Lip"
+170 "Cleft Palate"
+171 "Cleidocranial Dysplasia"
+172 "Cocaine-Related Disorders"
+173 "Cochlear Diseases"
+174 Colitis
+175 "Colitis, Ulcerative"
+176 "Colitis-Associated Neoplasms"
+177 "Collagen Diseases"
+178 "Colonic Diseases"
+179 "Colonic Neoplasms"
+180 "Colorectal Neoplasms"
+181 "Colorectal Neoplasms, Hereditary Nonpolyposis"
+182 "Common Variable Immunodeficiency"
+183 "Complex Regional Pain Syndromes"
+184 "Congenital Hypothyroidism"
+185 "Conjunctival Diseases"
+186 "Conjunctivitis, Allergic"
+187 "Coproporphyria, Hereditary"
+188 "Corneal Diseases"
+189 "Corneal Injuries"
+190 "Corneal Neovascularization"
+191 "Coronary Aneurysm"
+192 "Coronary Artery Disease"
+193 "Coronary Restenosis"
+194 "Coronary Stenosis"
+195 "Coronavirus Infections"
+196 "Costello Syndrome"
+197 "Cough-Variant Asthma"
+198 "Cranial Nerve Injuries"
+199 Craniopharyngioma
+200 "Crohn Disease"
+201 Cryptorchidism
+202 "Cushing Syndrome"
+203 "Cystadenocarcinoma, Serous"
+204 "Cystic Fibrosis"
+205 Cystitis
+206 "Cystitis, Interstitial"
+207 "Cytomegalovirus Infections"
+208 "Darier Disease"
+209 "De Lange Syndrome"
+210 "Deficiency Diseases"
+211 Dementia
+212 "Dementia, Vascular"
+213 "Demyelinating Diseases"
+214 Dengue
+215 "Dental Caries"
+216 "Dentin Dysplasia"
+217 "Depression, Postpartum"
+218 Dermatitis
+219 "Dermatitis Herpetiformis"
+220 "Dermatitis, Atopic"
+221 Dermatomyositis
+222 "Developmental Dysplasia of the Hip"
+223 "DiGeorge Syndrome"
+224 "Diabetes Mellitus"
+225 "Diabetes Mellitus, Type 1"
+226 "Diabetes Mellitus, Type 2"
+227 "Diabetes, Gestational"
+228 "Diabetic Nephropathies"
+229 "Diabetic Neuropathies"
+230 "Diabetic Retinopathy"
+231 Diarrhea
+232 "Dihydropyrimidine Dehydrogenase Deficiency"
+233 Disease
+234 "Disseminated Intravascular Coagulation"
+235 "Double Outlet Right Ventricle"
+236 "Down Syndrome"
+237 "Dry Eye Syndromes"
+238 "Duane Retraction Syndrome"
+239 "Duodenal Ulcer"
+240 "Dwarfism, Pituitary"
+241 Dysentery
+242 "Dysentery, Bacillary"
+243 Dystonia
+244 Echinococcosis
+245 "Ehlers-Danlos Syndrome"
+246 Elephantiasis
+247 Emphysema
+248 Encephalitis
+249 "Encephalitis, Japanese"
+250 "Encephalomyelitis, Autoimmune, Experimental"
+251 "Encephalomyelitis, Eastern Equine"
+252 "Encephalomyelitis, Western Equine"
+253 "Endocrine Gland Neoplasms"
+254 "Endocrine System Diseases"
+255 "Endodermal Sinus Tumor"
+256 "Endometrial Hyperplasia"
+257 "Endometrial Neoplasms"
+258 Endometriosis
+259 Endometritis
+260 "Endomyocardial Fibrosis"
+261 Endophthalmitis
+262 Enterocolitis
+263 "Enteropathy-Associated T-Cell Lymphoma"
+264 "Eosinophilic Esophagitis"
+265 "Epidermodysplasia Verruciformis"
+266 "Epidural Abscess"
+267 Epilepsy
+268 "Epilepsy, Temporal Lobe"
+269 "Erdheim-Chester Disease"
+270 "Erectile Dysfunction"
+271 "Erythema Multiforme"
+272 "Esophageal Atresia"
+273 "Esophageal Diseases"
+274 "Esophageal Neoplasms"
+275 "Essential Hypertension"
+276 Eunuchism
+277 "Exfoliation Syndrome"
+278 "Exocrine Pancreatic Insufficiency"
+279 Exostoses
+280 "Fabry Disease"
+281 "Facial Nerve Diseases"
+282 "Facial Nerve Injuries"
+283 "Familial Mediterranean Fever"
+284 "Familial Primary Pulmonary Hypertension"
+285 "Fanconi Anemia"
+286 "Fanconi Syndrome"
+287 "Fatigue Syndrome, Chronic"
+288 "Fibromatosis, Aggressive"
+289 Fibromyalgia
+290 Fibrosarcoma
+291 "Fluorosis, Dental"
+292 "Foot-and-Mouth Disease"
+293 "Friedreich Ataxia"
+294 "Frontotemporal Dementia"
+295 "Frontotemporal Lobar Degeneration"
+296 Fusariosis
+297 "Gallbladder Neoplasms"
+298 Gastrinoma
+299 Gastritis
+300 "Gastrointestinal Diseases"
+301 "Gastrointestinal Neoplasms"
+302 "Gastrointestinal Stromal Tumors"
+303 "Gaucher Disease"
+304 "Genetic Diseases, Inborn"
+305 "Gerstmann-Straussler-Scheinker Disease"
+306 "Gestational Trophoblastic Disease"
+307 "Gingival Overgrowth"
+308 Gingivitis
+309 Glaucoma
+310 "Glaucoma, Open-Angle"
+311 Glioblastoma
+312 Glioma
+313 "Glomerulonephritis, IGA"
+314 "Glomerulonephritis, Membranoproliferative"
+315 "Glomerulonephritis, Membranous"
+316 "Glomus Tumor"
+317 "Glucose Intolerance"
+318 "Glucose Metabolism Disorders"
+319 "Glycogen Storage Disease Type VI"
+320 Gout
+321 Granuloma
+322 "Granulomatosis with Polyangiitis"
+323 "Granulomatous Disease, Chronic"
+324 "Granulomatous Mastitis"
+325 "Graves Disease"
+326 "Graves Ophthalmopathy"
+327 "Growth Hormone-Secreting Pituitary Adenoma"
+328 "Guillain-Barre Syndrome"
+329 Gynatresia
+330 "HIV-Associated Lipodystrophy Syndrome"
+331 "Hair Diseases"
+332 "Hallux Valgus"
+333 "Hand, Foot and Mouth Disease"
+334 "Head and Neck Neoplasms"
+335 "Hearing Loss"
+336 "Hearing Loss, Sensorineural"
+337 "Heart Arrest"
+338 "Heart Defects, Congenital"
+339 "Heart Diseases"
+340 "Heart Failure"
+341 "Heart Failure, Systolic"
+342 "Heart Injuries"
+343 "Heart Neoplasms"
+344 "Heart Septal Defects, Atrial"
+345 "Heart Valve Diseases"
+346 Hemangioma
+347 "Hemangioma, Cavernous"
+348 "Hemangioma, Cavernous, Central Nervous System"
+349 Hemangiosarcoma
+350 "Hematologic Diseases"
+351 "Hematologic Neoplasms"
+352 Hemochromatosis
+353 "Hemoglobinuria, Paroxysmal"
+354 "Hemophilia A"
+355 "Hemorrhagic Disorders"
+356 "Hemorrhagic Fever, Ebola"
+357 "Hepatic Veno-Occlusive Disease"
+358 Hepatitis
+359 "Hepatitis A"
+360 "Hepatitis B"
+361 "Hepatitis B, Chronic"
+362 "Hepatitis C"
+363 "Hepatitis C, Chronic"
+364 "Hepatitis E"
+365 "Hepatitis, Alcoholic"
+366 "Hepatitis, Autoimmune"
+367 "Hepatitis, Chronic"
+368 Hepatoblastoma
+369 "Hepatolenticular Degeneration"
+370 "Hepatopulmonary Syndrome"
+371 "Hepatorenal Syndrome"
+372 "Hereditary Angioedema Types I and II"
+373 "Hereditary Autoinflammatory Diseases"
+374 Hernia
+375 "Hernias, Diaphragmatic, Congenital"
+376 "Herpes Simplex"
+377 "Hidradenitis Suppurativa"
+378 "High Pressure Neurological Syndrome"
+379 "Hirschsprung Disease"
+380 "Histiocytic Sarcoma"
+381 "Histiocytoma, Malignant Fibrous"
+382 Histiocytosis
+383 "Hodgkin Disease"
+384 "Homozygous Familial Hypercholesterolemia"
+385 "Huntington Disease"
+386 Hydrocephalus
+387 Hyperandrogenism
+388 Hyperekplexia
+389 Hyperglycemia
+390 "Hyperlipoproteinemia Type III"
+391 Hyperoxaluria
+392 "Hyperoxaluria, Primary"
+393 "Hyperparathyroidism, Primary"
+394 Hyperphosphatemia
+395 Hypersensitivity
+396 Hypertension
+397 "Hypertension, Pulmonary"
+398 "Hypertension, Renal"
+399 Hyperthyroidism
+400 Hypertriglyceridemia
+401 Hypertrophy
+402 Hyperuricemia
+403 Hypogonadism
+404 "Hypopharyngeal Neoplasms"
+405 "Hypoplastic Left Heart Syndrome"
+406 Hypospadias
+407 Hypothyroidism
+408 Hypotrichosis
+409 "Hypoxia-Ischemia, Brain"
+410 "Ichthyosis, Lamellar"
+411 "Idiopathic Pulmonary Fibrosis"
+412 "Immune System Diseases"
+413 "Incontinentia Pigmenti"
+414 "Infarction, Middle Cerebral Artery"
+415 "Inferior Wall Myocardial Infarction"
+416 Infertility
+417 "Infertility, Female"
+418 "Infertility, Male"
+419 Inflammation
+420 "Inflammatory Bowel Diseases"
+421 "Inflammatory Breast Neoplasms"
+422 "Influenza, Human"
+423 Insulinoma
+424 "Intellectual Disability"
+425 "Intermittent Claudication"
+426 "Intervertebral Disc Degeneration"
+427 "Intestinal Atresia"
+428 "Intestinal Diseases"
+429 "Intestinal Neoplasms"
+430 "Intracranial Aneurysm"
+431 "Intracranial Arteriosclerosis"
+432 "Iris Diseases"
+433 "Iron Metabolism Disorders"
+434 "Irritable Bowel Syndrome"
+435 Ischemia
+436 "Ischemic Attack, Transient"
+437 "Jaundice, Obstructive"
+438 "Kartagener Syndrome"
+439 Keratitis
+440 "Keratoconjunctivitis Sicca"
+441 Keratoconus
+442 "Kidney Cortex Necrosis"
+443 "Kidney Diseases"
+444 "Kidney Diseases, Cystic"
+445 "Kidney Failure, Chronic"
+446 "Kidney Neoplasms"
+447 "Labyrinth Diseases"
+448 "Laron Syndrome"
+449 "Laryngeal Neoplasms"
+450 "Legg-Calve-Perthes Disease"
+451 "Leigh Disease"
+452 Leiomyoma
+453 Leiomyosarcoma
+454 Leishmaniasis
+455 "Leishmaniasis, Diffuse Cutaneous"
+456 Leprosy
+457 "Lesch-Nyhan Syndrome"
+458 Leukemia
+459 "Leukemia, Biphenotypic, Acute"
+460 "Leukemia, Large Granular Lymphocytic"
+461 "Leukemia, Megakaryoblastic, Acute"
+462 "Leukemia, Monocytic, Acute"
+463 "Leukemia, Myelogenous, Chronic, BCR-ABL Positive"
+464 "Leukemia, Myeloid"
+465 "Leukemia, Myeloid, Accelerated Phase"
+466 "Leukemia, Myeloid, Acute"
+467 "Leukemia, Myeloid, Chronic, Atypical, BCR-ABL Negative"
+468 "Leukemia, Myelomonocytic, Chronic"
+469 "Leukemia, Prolymphocytic, T-Cell"
+470 "Leukemia, Promyelocytic, Acute"
+471 "Leukemia-Lymphoma, Adult T-Cell"
+472 "Leukoencephalopathy, Progressive Multifocal"
+473 "Leukoplakia, Oral"
+474 "Lewy Body Disease"
+475 "Li-Fraumeni Syndrome"
+476 "Lichen Planus, Oral"
+477 "Lip Neoplasms"
+478 "Lipid Metabolism Disorders"
+479 Lipodystrophy
+480 Liposarcoma
+481 Lissencephaly
+482 "Liver Cirrhosis"
+483 "Liver Cirrhosis, Alcoholic"
+484 "Liver Diseases"
+485 "Liver Diseases, Alcoholic"
+486 "Liver Failure"
+487 "Liver Neoplasms"
+488 "Low Tension Glaucoma"
+489 "Lung Abscess"
+490 "Lung Diseases"
+491 "Lung Diseases, Interstitial"
+492 "Lung Injury"
+493 "Lung Neoplasms"
+494 "Lupus Erythematosus, Cutaneous"
+495 "Lupus Erythematosus, Systemic"
+496 "Lupus Nephritis"
+497 "Lyme Disease"
+498 Lymphangioleiomyomatosis
+499 "Lymphatic Diseases"
+500 "Lymphohistiocytosis, Hemophagocytic"
+501 Lymphoma
+502 "Lymphoma, B-Cell"
+503 "Lymphoma, Extranodal NK-T-Cell"
+504 "Lymphoma, Follicular"
+505 "Lymphoma, Large B-Cell, Diffuse"
+506 "Lymphoma, Large-Cell, Anaplastic"
+507 "Lymphoma, Mantle-Cell"
+508 "Lymphoma, Non-Hodgkin"
+509 "Lymphoma, T-Cell"
+510 "Lymphoma, T-Cell, Cutaneous"
+511 "Lymphoma, T-Cell, Peripheral"
+512 Lymphopenia
+513 "Lymphoproliferative Disorders"
+514 "Lysosomal Storage Diseases"
+515 "Macular Degeneration"
+516 "Macular Edema"
+517 Malaria
+518 "Malaria, Cerebral"
+519 "Marfan Syndrome"
+520 Mastitis
+521 "Mastocytosis, Cutaneous"
+522 "Maxillary Sinus Neoplasms"
+523 Medulloblastoma
+524 Melanoma
+525 "Melanoma, Experimental"
+526 "Meniere Disease"
+527 Meningioma
+528 "Meningitis, Bacterial"
+529 "Meningitis, Cryptococcal"
+530 "Mental Retardation, X-Linked"
+531 Mesothelioma
+532 "Mesothelioma, Malignant"
+533 "Metabolic Diseases"
+534 "Metabolic Syndrome"
+535 Microphthalmos
+536 "Migraine Disorders"
+537 Miliaria
+538 "Mixed Connective Tissue Disease"
+539 "Monoclonal Gammopathy of Undetermined Significance"
+540 "Morphine Dependence"
+541 "Motion Sickness"
+542 "Motor Neuron Disease"
+543 "Mouth Diseases"
+544 "Mouth Neoplasms"
+545 "Moyamoya Disease"
+546 Mucositis
+547 "Multiple Myeloma"
+548 "Multiple Organ Failure"
+549 "Multiple Sclerosis"
+550 "Multiple Sclerosis, Relapsing-Remitting"
+551 "Multiple System Atrophy"
+552 "Muscular Atrophy"
+553 "Muscular Atrophy, Spinal"
+554 "Muscular Diseases"
+555 "Muscular Dystrophies, Limb-Girdle"
+556 "Muscular Dystrophy, Duchenne"
+557 "Muscular Dystrophy, Facioscapulohumeral"
+558 "Muscular Dystrophy, Oculopharyngeal"
+559 "Myasthenia Gravis"
+560 "Myasthenia Gravis with Thymus Hyperplasia"
+561 "Myasthenic Syndromes, Congenital"
+562 "Mycosis Fungoides"
+563 "Myelodysplastic Syndromes"
+564 "Myocardial Infarction"
+565 Myocarditis
+566 "Myopathies, Structural, Congenital"
+567 Myopia
+568 "Myopia, Degenerative"
+569 Myositis
+570 "Myositis, Inclusion Body"
+571 "Myotonic Disorders"
+572 "Nasal Polyps"
+573 "Nasopharyngeal Carcinoma"
+574 "Nasopharyngeal Neoplasms"
+575 Nasopharyngitis
+576 "Neoplasms, Fibrous Tissue"
+577 "Neoplasms, Germ Cell and Embryonal"
+578 "Neoplasms, Plasma Cell"
+579 Nephritis
+580 "Nephritis, Interstitial"
+581 Nephrocalcinosis
+582 Nephrosclerosis
+583 "Nephrosis, Lipoid"
+584 "Nephrotic Syndrome"
+585 "Nervous System Neoplasms"
+586 "Netherton Syndrome"
+587 "Neural Tube Defects"
+588 Neurilemmoma
+589 Neuroblastoma
+590 "Neurodegenerative Diseases"
+591 "Neuroectodermal Tumors, Primitive"
+592 "Neuroendocrine Tumors"
+593 "Neurofibromatosis 1"
+594 "Neurofibromatosis 2"
+595 "Neuroleptic Malignant Syndrome"
+596 "Neuroma, Acoustic"
+597 "Neuromyelitis Optica"
+598 "Neuronal Ceroid-Lipofuscinoses"
+599 Neurosyphilis
+600 Neutropenia
+601 "Newcastle Disease"
+602 "Niemann-Pick Diseases"
+603 "Nijmegen Breakage Syndrome"
+604 Noma
+605 "Non-ST Elevated Myocardial Infarction"
+606 "Non-alcoholic Fatty Liver Disease"
+607 "Nondisjunction, Genetic"
+608 Obesity
+609 "Obesity, Morbid"
+610 "Ocular Hypertension"
+611 Oligospermia
+612 Oophoritis
+613 "Opioid-Related Disorders"
+614 "Optic Atrophy, Hereditary, Leber"
+615 "Optic Nerve Diseases"
+616 "Optic Nerve Glioma"
+617 "Optic Nerve Injuries"
+618 "Optic Neuritis"
+619 "Oral Submucous Fibrosis"
+620 Orchitis
+621 "Orofaciodigital Syndromes"
+622 "Oropharyngeal Neoplasms"
+623 Osteitis
+624 Osteoarthritis
+625 "Osteoarthritis, Knee"
+626 "Osteoarthropathy, Primary Hypertrophic"
+627 Osteoblastoma
+628 "Osteochondritis Dissecans"
+629 "Osteogenesis Imperfecta"
+630 Osteomyelitis
+631 Osteonecrosis
+632 Osteoporosis
+633 "Osteoporosis, Postmenopausal"
+634 Osteosarcoma
+635 "Osteosarcoma, Juxtacortical"
+636 "Otitis Media"
+637 "Ovarian Diseases"
+638 "Ovarian Neoplasms"
+639 "Pancreatic Intraductal Neoplasms"
+640 "Pancreatic Neoplasms"
+641 Pancreatitis
+642 "Pancreatitis, Acute Hemorrhagic"
+643 "Pancreatitis, Acute Necrotizing"
+644 "Pancreatitis, Chronic"
+645 "Papilloma, Inverted"
+646 "Papillomavirus Infections"
+647 "Papillon-Lefevre Disease"
+648 Paraganglioma
+649 "Paranasal Sinus Neoplasms"
+650 "Parathyroid Neoplasms"
+651 "Parkinson Disease"
+652 "Parkinson Disease, Secondary"
+653 "Parkinsonian Disorders"
+654 "Pars Planitis"
+655 "Pediatric Obesity"
+656 "Pelizaeus-Merzbacher Disease"
+657 "Pemphigoid, Bullous"
+658 "Pemphigus, Benign Familial"
+659 "Penile Neoplasms"
+660 "Peptic Ulcer"
+661 "Periapical Periodontitis"
+662 "Pericardial Effusion"
+663 "Periodontal Diseases"
+664 Periodontitis
+665 "Peripheral Nervous System Diseases"
+666 "Peritoneal Diseases"
+667 "Peritoneal Neoplasms"
+668 "Persian Gulf Syndrome"
+669 Pheochromocytoma
+670 Pica
+671 "Pigmentation Disorders"
+672 "Pituitary Neoplasms"
+673 "Placenta Accreta"
+674 "Placenta Diseases"
+675 "Plasmablastic Lymphoma"
+676 "Platelet Storage Pool Deficiency"
+677 "Pleural Diseases"
+678 Pneumonia
+679 "Pneumonia, Mycoplasma"
+680 "Pneumonia, Staphylococcal"
+681 "Pneumonia, Ventilator-Associated"
+682 Pneumothorax
+683 "Polycystic Kidney Diseases"
+684 "Polycystic Ovary Syndrome"
+685 Polycythemia
+686 "Polycythemia Vera"
+687 Polydactyly
+688 "Polymyalgia Rheumatica"
+689 Polymyositis
+690 Polyps
+691 "Porphyria, Erythropoietic"
+692 "Porphyria, Variegate"
+693 "Post-Cardiac Arrest Syndrome"
+694 "Postural Orthostatic Tachycardia Syndrome"
+695 "Prader-Willi Syndrome"
+696 Pre-Eclampsia
+697 "Precursor B-Cell Lymphoblastic Leukemia-Lymphoma"
+698 "Pregnancy, Ectopic"
+699 "Premature Ejaculation"
+700 "Premenstrual Syndrome"
+701 "Primary Ovarian Insufficiency"
+702 "Prion Diseases"
+703 Progeria
+704 Prolactinoma
+705 "Prostatic Diseases"
+706 "Prostatic Hyperplasia"
+707 "Prostatic Neoplasms"
+708 "Prostatic Neoplasms, Castration-Resistant"
+709 Prostatitis
+710 "Protein-Losing Enteropathies"
+711 Proteinuria
+712 Psoriasis
+713 Pterygium
+714 "Pulmonary Disease, Chronic Obstructive"
+715 "Pulmonary Edema"
+716 "Pulmonary Embolism"
+717 "Pulmonary Emphysema"
+718 "Pulmonary Eosinophilia"
+719 "Pulmonary Fibrosis"
+720 "Pulmonary Veno-Occlusive Disease"
+721 Pulpitis
+722 Purpura
+723 Pyelonephritis
+724 "REM Sleep Behavior Disorder"
+725 Rabies
+726 "Rectal Neoplasms"
+727 "Rectal Prolapse"
+728 "Reflex Sympathetic Dystrophy"
+729 "Renal Artery Obstruction"
+730 "Respiratory Distress Syndrome"
+731 "Respiratory Distress Syndrome, Newborn"
+732 "Respiratory Insufficiency"
+733 "Respiratory Paralysis"
+734 "Respiratory Syncytial Virus Infections"
+735 "Retinal Degeneration"
+736 "Retinal Detachment"
+737 "Retinal Diseases"
+738 "Retinal Vein Occlusion"
+739 "Retinal cone dystrophy 2"
+740 Retinitis
+741 "Retinitis Pigmentosa"
+742 Retinoblastoma
+743 "Retinopathy of Prematurity"
+744 "Rett Syndrome"
+745 Rhabdomyosarcoma
+746 "Rhabdomyosarcoma, Alveolar"
+747 "Rheumatic Fever"
+748 "Rheumatic Heart Disease"
+749 "Rhinitis, Allergic"
+750 "Rhinitis, Allergic, Seasonal"
+751 "Rickettsia Infections"
+752 "Rift Valley Fever"
+753 "Root Resorption"
+754 "Rubella Syndrome, Congenital"
+755 "Salivary Gland Neoplasms"
+756 Salpingitis
+757 Sarcoidosis
+758 "Sarcoidosis, Pulmonary"
+759 Sarcoma
+760 "Sarcoma 37"
+761 "Sarcoma, Ewing"
+762 "Sarcoma, Kaposi"
+763 "Sarcoma, Synovial"
+764 Schistosomiasis
+765 "Schistosomiasis japonica"
+766 "Sciatic Neuropathy"
+767 "Scleral Diseases"
+768 "Scleroderma, Diffuse"
+769 "Scleroderma, Systemic"
+770 "Seizures, Febrile"
+771 Seminoma
+772 "Sertoli Cell-Only Syndrome"
+773 "Severe Acute Respiratory Syndrome"
+774 "Sezary Syndrome"
+775 "Shock, Cardiogenic"
+776 "Sick Sinus Syndrome"
+777 Siderosis
+778 Silicotuberculosis
+779 "Sinus Thrombosis, Intracranial"
+780 "Sjogren's Syndrome"
+781 "Skin Diseases"
+782 "Skin Neoplasms"
+783 "Sleep Apnea, Obstructive"
+784 "Small Cell Lung Carcinoma"
+785 "Smooth Muscle Tumor"
+786 Spasm
+787 "Spermatic Cord Torsion"
+788 "Spherocytosis, Hereditary"
+789 "Spinal Cord Diseases"
+790 "Spinal Cord Injuries"
+791 "Splenic Diseases"
+792 "Splenic Neoplasms"
+793 "Spondylitis, Ankylosing"
+794 "Squamous Cell Carcinoma of Head and Neck"
+795 "Staphylococcal Infections"
+796 "Status Asthmaticus"
+797 "Status Epilepticus"
+798 "Stiff-Person Syndrome"
+799 "Still's Disease, Adult-Onset"
+800 "Stomach Diseases"
+801 "Stomach Neoplasms"
+802 "Stomatitis, Herpetic"
+803 "Striatonigral Degeneration"
+804 "Substance-Related Disorders"
+805 "Supranuclear Palsy, Progressive"
+806 Synovitis
+807 Syphilis
+808 Tachycardia
+809 "Takayasu Arteritis"
+810 "Telangiectasia, Hereditary Hemorrhagic"
+811 Teratoma
+812 "Testicular Diseases"
+813 "Testicular Neoplasms"
+814 "Tetralogy of Fallot"
+815 Thalassemia
+816 "Thiamine Deficiency"
+817 "Thromboangiitis Obliterans"
+818 "Thrombocythemia, Essential"
+819 Thrombocytopenia
+820 Thrombophlebitis
+821 Thrombosis
+822 Thymoma
+823 "Thymus Neoplasms"
+824 "Thyroid Cancer, Papillary"
+825 "Thyroid Carcinoma, Anaplastic"
+826 "Thyroid Diseases"
+827 "Thyroid Neoplasms"
+828 "Thyroiditis, Autoimmune"
+829 "Tic Disorders"
+830 "Tongue Neoplasms"
+831 Toxoplasmosis
+832 "Tracheal Diseases"
+833 "Tracheal Stenosis"
+834 Trachoma
+835 "Tricuspid Valve Insufficiency"
+836 "Trigeminal Neuralgia"
+837 "Triple Negative Breast Neoplasms"
+838 "Trophoblastic Neoplasms"
+839 "Trophoblastic Tumor, Placental Site"
+840 "Trypanosomiasis, African"
+841 Tuberculosis
+842 "Tuberculosis, Gastrointestinal"
+843 "Tuberculosis, Meningeal"
+844 "Tuberculosis, Multidrug-Resistant"
+845 "Tuberculosis, Pulmonary"
+846 "Tuberous Sclerosis"
+847 "Turner Syndrome"
+848 Uremia
+849 "Urethral Stricture"
+850 Urethritis
+851 "Urinary Bladder Diseases"
+852 "Urinary Bladder Neck Obstruction"
+853 "Urinary Bladder Neoplasms"
+854 Urticaria
+855 "Uterine Diseases"
+856 "Uterine Neoplasms"
+857 Uveitis
+858 "Vaginal Diseases"
+859 "Vaginosis, Bacterial"
+860 "Varicose Veins"
+861 "Vascular Diseases"
+862 "Vascular System Injuries"
+863 Vasculitis
+864 "Vasculitis, Central Nervous System"
+865 "Vasospasm, Intracranial"
+866 "Vesico-Ureteral Reflux"
+867 "Vesicular Stomatitis"
+868 "Vision Disorders"
+869 "Vitamin B Deficiency"
+870 "Vitelliform Macular Dystrophy"
+871 Vitiligo
+872 "Vitreoretinopathy, Proliferative"
+873 "Wasting Disease, Chronic"
+874 "Weight Loss"
+875 "Weil Disease"
+876 "Werner Syndrome"
+877 "West Nile Fever"
+878 "Wolfram Syndrome"
+879 "Yellow Nail Syndrome"
+880 alpha-Thalassemia
+881 beta-Thalassemia
+882 "nephrotic syndrome"
+883 "von Hippel-Lindau Disease"
+884 "von Willebrand Diseases"
