@@ -8,7 +8,7 @@ import csv
 MDA_adj = pd.read_csv('../data/mir2disease+lunwen/-1-0-+1/mirBase_lunwen_101_MDA_.csv', header=None)
 
 MDA_adj=np.array(MDA_adj)
-# miRNA和diease的数量
+# the number of mRNAs and diseases
 nc=np.array(MDA_adj).shape[0]   #535
 nd=np.array(MDA_adj).shape[1]   #302
 
