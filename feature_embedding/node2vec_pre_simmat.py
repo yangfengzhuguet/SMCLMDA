@@ -13,7 +13,7 @@ import seaborn as sns
 # # circ_gip = pd.read_csv('../Dataset2/circRNA_GIPsimilarity.csv', sep=',', header=None)
 #
 #
-# # 基于设定的阈值修改相似度特征矩阵为0/1二值关联矩阵
+# # Modify the similarity feature matrix to a 0/1 binary association matrix based on the set threshold
 # dis_gip, n1 = get_new_matrix_MD(dis_gip, 0.5)
 # circ_gip, n2 = get_new_matrix_MD(circ_gip, 0.5)
 #
@@ -44,7 +44,7 @@ import seaborn as sns
 # dis_gip = pd.read_csv('data_ori/dis_CosSim.csv', sep=',', header=None)
 # circ_gip = pd.read_csv('data_ori/circ_CosSim.csv', sep=',', header=None)
 #
-# # 基于设定的阈值修改相似度特征矩阵为0/1二值关联矩阵
+# # Modify the similarity feature matrix to a 0/1 binary association matrix based on the set threshold
 # dis_gip, n1 = get_new_matrix_MD(dis_gip, 0.5)
 # circ_gip, n2 = get_new_matrix_MD(circ_gip, 0.5)
 #
@@ -89,15 +89,15 @@ def get_new_matrix_MD(D_D, th_d):
             else:
                 d[i][j] = 0
     return d, tep_d
-# ################################################# 集成相似度  Sim_all   ########################################################
+# ################################################# Ensemble Similarity  Sim_all   ########################################################
 dis_all = pd.read_csv('embadding-miRBase+lunwen/-1-0-+1/disSim_all.csv', sep=',', header=None)
 mi_all = pd.read_csv('embadding-miRBase+lunwen/-1-0-+1/miSim_all.csv', sep=',', header=None)
-# dis_th = threshold(dis_all) # 在转换成0/1矩阵时，先进行阈值的选择
-# mi_th = threshold(mi_all) # 在转换成0/1矩阵时，先进行阈值的选择
+# dis_th = threshold(dis_all) # When converting to a 0/1 matrix, first select the threshold
+# mi_th = threshold(mi_all) # When converting to a 0/1 matrix, first select the threshold
 # print(dis_th)
 # print(mi_th)
 
-# 基于设定的阈值修改相似度特征矩阵为0/1二值关联矩阵
+# Modify the similarity feature matrix to a 0/1 binary association matrix based on the set threshold
 dis_all, n1 = get_new_matrix_MD(dis_all, 0.5)
 mi_all, n2 = get_new_matrix_MD(mi_all, 0.5)
 print("The number of dis interaction is %s and miRNA inseraction is %s in Heterogeneous graph by intergate Sim" %(n1,n2))
