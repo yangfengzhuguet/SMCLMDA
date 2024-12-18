@@ -1,3 +1,2 @@
 # SMCLMDA
-SMCLMDA
-run main.py
+please run main.py
