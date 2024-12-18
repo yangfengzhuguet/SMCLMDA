@@ -5,7 +5,7 @@ import random
 import numpy as np
 import pandas as pd
 
-#   将关联矩阵中的每个数据转化为tensor后读出
+#   Convert each data in the association matrix into a tensor and read it out
 def read_csv(path):
     with open(path, 'r', newline='') as csv_file:
         reader = csv.reader(csv_file)
@@ -45,13 +45,13 @@ for i in range(disSim.shape[0]):
         else:
             disSim[i][j] = dd_g_matrix[i][j]
 
-# 保存结果
+# save result
 result = pd.DataFrame(disSim)
 result.to_csv('embadding-mir2disease+lunwen/-1-0-+1/disSim_all.csv', header=False, index=False)
 
 
 
-#########################################   circRNA Sim ##################################################
+#########################################   miRNA Sim ##################################################
 "miRNA gip sim"
 cc_g_matrix = read_csv('../data/mir2disease+lunwen/-1-0-+1/miRNA_sim/miGIPSim.csv')
 "miRNA consine sim"
@@ -72,6 +72,6 @@ for ii in range(circSim.shape[0]):
             circSim[ii][jj] = (cc_g_matrix[ii][jj] + cc_c_matrix[ii][jj]) / 2
         else:
             circSim[ii][jj] = cc_g_matrix[ii][jj]
-# 保存结果
+# save result
 result = pd.DataFrame(circSim)
 result.to_csv('embadding-mir2disease+lunwen/-1-0-+1/miSim_all.csv', header=False, index=False)
