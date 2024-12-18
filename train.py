@@ -27,7 +27,7 @@ def show_auc(pre_score, label, flag):
     precision,recall,prth = precision_recall_curve(y_true,y_score)
     aupr = auc(recall,precision)
     # if flag == 'test':
-    #     # 绘制roc曲线并保存
+    #     # Plot the roc curve and save it
     #     plt.figure()
     #     plt.plot(fpr, tpr, color='darkorange', lw=2, label=f'ROC curve (area = {auroc:.4f})')
     #     plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
@@ -38,7 +38,7 @@ def show_auc(pre_score, label, flag):
     #     plt.title('Receiver Operating Characteristic')
     #     plt.legend(loc='lower right')
     #
-    #     # 保存曲线到指定目录
+    #     # Save the curve to the specified directory
     #     # output_dir = 'result/HMDD v3-2-wuguangdui/10-fold_'
     #     output_dir = 'result/HMDD V4/fencneg'
     #     os.makedirs(output_dir, exist_ok=True)
@@ -48,15 +48,15 @@ def show_auc(pre_score, label, flag):
 
 def train_SMCLMDA(arges, model, sim_set, meta_set, emb, pos_miRNA, pos_disease,optimizer, pair_pos_neg_fengceng, device):
     model = model.to(device)
-    train_miRNA_index_fc = torch.tensor(pair_pos_neg_fengceng['train'][:,0], dtype=torch.long).to(device) # HMDD v3.2中分层抽样训练集中miRNA的索引
-    train_disease_index_fc = torch.tensor(pair_pos_neg_fengceng['train'][:,1],dtype=torch.long).to(device) # HMDD v3.2中分层抽样训练集中disease的索引
-    train_label_fc = torch.tensor(pair_pos_neg_fengceng['train'][:,2]).to(device).float() # HMDD v3.2中分层抽样训练集的标签
+    train_miRNA_index_fc = torch.tensor(pair_pos_neg_fengceng['train'][:,0], dtype=torch.long).to(device) 
+    train_disease_index_fc = torch.tensor(pair_pos_neg_fengceng['train'][:,1],dtype=torch.long).to(device) 
+    train_label_fc = torch.tensor(pair_pos_neg_fengceng['train'][:,2]).to(device).float() 
 
-    test_miRNA_index_fc = torch.tensor(pair_pos_neg_fengceng['test'][:, 0],dtype=torch.long).to(device)  # HMDD v3.2中分层抽样训练集中miRNA的索引
-    test_disease_index_fc = torch.tensor(pair_pos_neg_fengceng['test'][:,1],dtype=torch.long).to(device)  # HMDD v3.2中分层抽样训练集中disease的索引
-    test_label_fc = torch.tensor(pair_pos_neg_fengceng['test'][:,2]).to(device).float()  # HMDD v3.2中分层抽样训练集的标签
+    test_miRNA_index_fc = torch.tensor(pair_pos_neg_fengceng['test'][:, 0],dtype=torch.long).to(device)  
+    test_disease_index_fc = torch.tensor(pair_pos_neg_fengceng['test'][:,1],dtype=torch.long).to(device)  
+    test_label_fc = torch.tensor(pair_pos_neg_fengceng['test'][:,2]).to(device).float()  
 
-    # # 加载因果数据集yanzheng
+    # # Loading the causal dataset yanzheng
     # train_miRNA_index_fc = pair_pos_neg_fengceng['train'][0].values
     # train_miRNA_index_fc = torch.tensor(train_miRNA_index_fc, dtype=torch.long).to(device)
     # train_disease_index_fc = pair_pos_neg_fengceng['train'][1].values
@@ -83,7 +83,7 @@ def train_SMCLMDA(arges, model, sim_set, meta_set, emb, pos_miRNA, pos_disease,o
     m = 1
     n = 1
     pca = PCA(n_components=2)
-    print('######################### 开始进入模型的训练 #############################')
+    print('######################### Start training #############################')
     for epoch_ in tqdm.tqdm(range(arges.epoch), desc='Training Epochs'):
         time_start = time.time()
         model.train()
@@ -136,12 +136,12 @@ def train_SMCLMDA(arges, model, sim_set, meta_set, emb, pos_miRNA, pos_disease,o
         #     mi_emb = mi_emb.detach().cpu().numpy()
         #     di_emb = di_emb.detach().cpu().numpy()
         #     all_features = np.concatenate([mi_emb, di_emb], axis=1)
-        #     # t-SNE 降维
+        #     # t-SNE dimensionality reduction
         #     low_dim_features = tsne.fit_transform(all_features)
-        #     # # umap 降维
+        #     # # umap dimensionality reduction
         #     # reducer = umap.UMAP(n_neighbors=15, min_dist=0.1, n_components=2, metric='euclidean')
         #     # low_dim_features = reducer.fit_transform(all_features)
-        #     # 绘制 t-SNE 投影
+        #     # Plotting t-SNE projections
         #     plt.figure(figsize=(8, 6))
         #     plt.scatter(low_dim_features[:, 0], low_dim_features[:, 1], c=train_label_fc.detach().cpu().numpy(), cmap='coolwarm', s=5)
         #     plt.title(f'epoch: {epoch_+1}')
@@ -173,7 +173,7 @@ def train_SMCLMDA(arges, model, sim_set, meta_set, emb, pos_miRNA, pos_disease,o
     # plt.savefig(os.path.join('result/HMDD V4', f'train_10_balance.png'))
     # plt.show()
     print('The loss_min:{}, best auc{}, best aupr{}'.format(loss_min, best_auc, best_aupr))
-    print('######################### 模型训练结束,开始进入测试 #############################')
+    print('######################### Model training is complete, and we're moving on to testing. #############################')
     model.eval()
     with torch.no_grad():
         test_score, loss_cl_test = model(sim_set, meta_set, emb, pos_miRNA, pos_disease, test_miRNA_index_fc, test_disease_index_fc)
@@ -206,30 +206,28 @@ def train_SMCLMDA(arges, model, sim_set, meta_set, emb, pos_miRNA, pos_disease,o
         # plt.show()
 
 
-        # # 假设 y_true 是实际标签，y_pred 是模型的预测标签
+        # # Suppose y_true is the actual label and y_pred is the model's predicted label
         # pred1 = np.where(pred1 >= 0.4207,1,0)
         # conf_matrix = confusion_matrix(label1, pred1)
         #
-        # # 使用 Seaborn 进行可视化
+        # # Visualization with Seaborn
         # plt.figure(figsize=(6, 6))
         # sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues', cbar=False, annot_kws={"size": 20})
         # plt.title("Confusion Matrix", fontsize=24)
         # plt.ylabel('Actual Label', fontsize=22)
         # plt.xlabel('Predicted Label', fontsize=22)
-        # plt.xticks(fontsize=16)  # 增大X轴刻度字体
-        # plt.yticks(fontsize=16)  # 增大Y轴刻度字体
+        # plt.xticks(fontsize=16)  
+        # plt.yticks(fontsize=16)  
         # plt.savefig(os.path.join('result/HMDD V4', f'test_10_balance_matrix_.png'))
         # plt.show()
 
-        # 设置图像分辨率和字体
         plt.rcParams['figure.dpi'] = 600
         font1 = {"family": "Arial", "weight": "book", "size": 9}
 
-        # 示例数据
-        y_true = np.array(test_label_fc.detach().cpu())  # 因果性标签
-        y_true = np.where(y_true == 1, True, False)  # 将1设为True，2设为False
-        y_scores = np.array(test_score.detach().cpu())   # 预测分数
-        # 计算ROC曲线
+        y_true = np.array(test_label_fc.detach().cpu())  
+        y_true = np.where(y_true == 1, True, False)  
+        y_scores = np.array(test_score.detach().cpu())  
+        # Plotting the ROC curve
         fpr, tpr, thresholds = roc_curve(y_true, y_scores)
         roc_auc_ = auc(fpr, tpr)
         roc_auc_ = round(roc_auc_, 3)
@@ -237,16 +235,16 @@ def train_SMCLMDA(arges, model, sim_set, meta_set, emb, pos_miRNA, pos_disease,o
         # np.save('result/HMDD V4/10-fold-balance/fp_and_tp_nocl/hmdd4_balance_tp10.npy', tpr)
 
 
-        # 计算Precision-Recall曲线
+        # Plotting Precision-Recall Curve Lines
         precision, recall, pr_thresholds = precision_recall_curve(y_true, y_scores)
         aupr = auc(recall, precision)
         aupr = round(aupr, 3)
-        # 计算不同阈值下的性能指标，并找到最佳阈值
+        # Calculate the performance metrics at different thresholds and find the optimal thresholds
         best_threshold = 0.0
         best_f1 = 0.0
         best_metrics = {}
 
-        # 保存每个阈值下的灵敏度和特异性
+        # Sensitivity and specificity at each threshold are preserved
         sensitivities = []
         specificities = []
 
@@ -276,7 +274,7 @@ def train_SMCLMDA(arges, model, sim_set, meta_set, emb, pos_miRNA, pos_disease,o
                     "specificity": specificity
                 }
 
-        # 绘制ROC曲线
+        # Plotting the ROC curve
         plt.figure(1)
         plt.plot(fpr, tpr, label=f"AUROC={roc_auc_}")
         plt.xlabel('False Positive Rate', font1)
@@ -284,7 +282,7 @@ def train_SMCLMDA(arges, model, sim_set, meta_set, emb, pos_miRNA, pos_disease,o
         plt.title('ROC Curve', font1)
         plt.legend(prop=font1)
 
-        # 绘制Precision-Recall曲线
+        # Plotting the Precision-Recal curvel
         plt.figure(2)
         plt.plot(recall, precision, label=f"AUPR={aupr}", color='purple')
         plt.xlabel('Recall', font1)
@@ -292,7 +290,7 @@ def train_SMCLMDA(arges, model, sim_set, meta_set, emb, pos_miRNA, pos_disease,o
         plt.title('Precision-Recall Curve', font1)
         plt.legend(prop=font1)
 
-        # 显示最佳阈值下的性能指标
+        # Displays performance metrics at optimal thresholds
         best_metrics_str = (f"Best Threshold: {best_threshold:.4f}\n"
                             f"Accuracy: {best_metrics['accuracy']:.4f}\n"
                             f"Precision: {best_metrics['precision']:.4f}\n"
@@ -302,16 +300,16 @@ def train_SMCLMDA(arges, model, sim_set, meta_set, emb, pos_miRNA, pos_disease,o
                             f"F1 Score: {best_metrics['f1']:.4f}")
         plt.text(0.6, 0.2, best_metrics_str, bbox=dict(facecolor='white', alpha=0.5), fontsize=9)
 
-        # 显示并保存图像
+        # Display and save images
         # plt.savefig("./Result_causal_for_ROC_10_fold_mean.tiff", dpi=600)
         # plt.show()
         # plt.close()
-        # 打印最佳阈值和性能指标
+        # Printing Optimal Thresholds and Performance Metrics
         print(f"Best Threshold: {best_threshold}")
         print(f"Accuracy: {best_metrics['accuracy']:.4f}")
         print(f"Precision: {best_metrics['precision']:.4f}")
-        print(f"Recall: {best_metrics['recall']:.4f}")  # 灵敏度
-        print(f"Specificity: {best_metrics['specificity']:.4f}")  # 特异性
+        print(f"Recall: {best_metrics['recall']:.4f}") 
+        print(f"Specificity: {best_metrics['specificity']:.4f}") 
         print(f"MCC: {best_metrics['mcc']:.4f}")
         print(f"F1 Score: {best_metrics['f1']:.4f}")
         print(f"AUROC: {roc_auc_:.4f}")
