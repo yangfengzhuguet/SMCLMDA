@@ -4,7 +4,7 @@ import os
 import pickle
 from torch.optim import Adam, RMSprop
 from args import get_args
-from utile import set_seed, construct_meta_pos, get_syn_sim, get_emb
+from utils import set_seed, construct_meta_pos, get_syn_sim, get_emb
 from model import SMCLMDA
 from train import train_SMCLMDA
 
