@@ -13,7 +13,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 def load_pkl(parent_dir, filename):
     file_path = os.path.join(parent_dir, filename)
-    # 从文件加载字典
+    # Load dictionary from file
     with open(file_path, 'rb') as file:
         loaded_data = pickle.load(file)
     return loaded_data
@@ -23,14 +23,14 @@ def main():
     set_seed(args.seed)
     is_tenfold = 'true'
     if args.isuse == 'yes':
-        mi_final, di_final = get_syn_sim(78, 37)  # 采用非线性的方法进行融合各个数据源的相似度矩阵,保存在自己的目录下
-    emb = get_emb() # 获取Node2Vec获取的miRNA、疾病的特征
-    sim_set = load_pkl(args.parent_dir, 'sim_set.pkl') # 用于获取融合相似度矩阵或者多视图相似度矩阵
-    meta_set = load_pkl(args.parent_dir, 'meta_set.pkl') # 用于元路径的相似度矩阵
+        mi_final, di_final = get_syn_sim(78, 37)  # The similarity matrix of each data source is fused using a nonlinear method and saved in its own directory.
+    emb = get_emb() # Node2Vec acquires localized features of miRNAs and diseases
+    sim_set = load_pkl(args.parent_dir, 'sim_set.pkl') # Used to obtain a fused similarity matrix or a multi-view similarity matrix
+    meta_set = load_pkl(args.parent_dir, 'meta_set.pkl') # Get the similarity matrix of the meta-path
     mdm = meta_set['meta']['mdm']
     dmd = meta_set['meta']['dmd']
-    pos_miRNA_mask, pos_disease_mask = construct_meta_pos(mdm, dmd, args.pos_sum) # 获取正负样本对的掩码
-    print('--------------------------------数据整理完毕，准备构建模型-------------------')
+    pos_miRNA_mask, pos_disease_mask = construct_meta_pos(mdm, dmd, args.pos_sum) # Get masks for positive and negative sample pairs
+    print('--------------------------------Data organized and ready to build the model-------------------')
     model = SMCLMDA(args)
     optimizer = Adam(model.parameters(), lr=args.lr, weight_decay=args.we_decay)
     Acc = []
@@ -43,8 +43,8 @@ def main():
     AUPR = []
     if is_tenfold == 'true':
         for i in range(10):
-            print(f'-------------------第{i+1}折-------------------------------')
-            pair_pos_neg_fengceng = load_pkl(args.parent_dir_, f'pos_neg_pair_10_{i+1}.pkl')  # 加载正负样本用于十折训练和测试
+            print(f'-------------------the{i+1}fold-------------------------------')
+            pair_pos_neg_fengceng = load_pkl(args.parent_dir_, f'pos_neg_pair_10_{i+1}.pkl')  # Load positive and negative samples for ten-fold (five-fold) training and testing
             accuracy, precision, recall, specificity, mcc, f1, auc_, aupr_ = train_SMCLMDA(args, model, sim_set, meta_set, emb, pos_miRNA_mask, pos_disease_mask, optimizer, pair_pos_neg_fengceng, device)
             Acc.append(accuracy)
             Pre.append(precision)
@@ -55,7 +55,7 @@ def main():
             AUROC.append(auc_)
             AUPR.append(aupr_)
     else:
-        pair_pos_neg_fengceng = load_pkl(args.parent_dir_, 'pos_neg_pair_fengceng.pkl') # 加载正负样本用于独立测试训练和测试
+        pair_pos_neg_fengceng = load_pkl(args.parent_dir_, 'pos_neg_pair_fengceng.pkl') # Load positive and negative samples for independent test training and testing
         accuracy, precision, recall, specificity, mcc, f1, auc_, aupr_ =  train_SMCLMDA(args, model, sim_set, meta_set, emb, pos_miRNA_mask, pos_disease_mask, optimizer,pair_pos_neg_fengceng, device)
         Acc.append(accuracy)
         Pre.append(precision)
@@ -65,7 +65,7 @@ def main():
         F1.append(f1)
         AUROC.append(auc_)
         AUPR.append(aupr_)
-    print('---------------------------------打印指标----------------------------------')
+    print('---------------------------------Print metrics----------------------------------')
     for acc in Acc:
         print(acc)
     print(f'avg ACC:{sum(Acc) / len(Acc)}')
@@ -90,6 +90,6 @@ def main():
     for aupr in AUPR:
         print(aupr)
     print(f'avg AUPR:{sum(AUPR) / len(AUPR)}')
-    print('----------------------------------- 结束 ----------------------------------')
+    print('----------------------------------- ending ----------------------------------')
 if __name__ == "__main__":
     main()
