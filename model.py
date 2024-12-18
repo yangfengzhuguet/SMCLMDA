@@ -13,7 +13,7 @@ import numpy as np
 os.environ['CUDA_LAUNCH_BLOCKING'] = '0'
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-# 定义归一化层
+# Defining the Normalization Layer
 class PairNorm(nn.Module):
     def __init__(self, mode='PN', scale=1):
         """
@@ -28,7 +28,6 @@ class PairNorm(nn.Module):
 
     def forward(self, x):
         col_mean = x.mean(dim=0)
-        ######对于图卷积神经网络(GCN)、图注意力网络(GAT)使用PN-SI或者PN-SCS，而且层数超过五层的时候效果比较好
         if self.mode == 'PN-SI':
             x = x - col_mean  # center
             rownorm_individual = (1e-6 + x.pow(2).sum(dim=1, keepdim=True)).sqrt()
@@ -41,7 +40,7 @@ class PairNorm(nn.Module):
         return x
 
 
-# 定义语义层注意力SLA,用于融合不同原路径下的视图信息
+# Define semantic layer attention SLA for fusion of view information under different original paths.
 class SLAttention(nn.Module):
     def __init__(self, hidden, dropout):
         super(SLAttention, self).__init__()
@@ -56,9 +55,9 @@ class SLAttention(nn.Module):
         if dropout:
             self.dropout = nn.Dropout(dropout)
         else:
-            self.dropout = lambda x: x # 如果没有dropout那么使用匿名函数直接返回原先的值
+            self.dropout = lambda x: x 
 
-    def forward(self, list_): # 该list_各个视图的结果
+    def forward(self, list_): 
         beta = []
         a = self.a
         for view_ in list_:
@@ -73,7 +72,7 @@ class SLAttention(nn.Module):
             fin_metra += list_[i] * beta[i]
         return fin_metra
 
-# 定义用于元路径的图卷积
+# Define the meta-path map convolution
 class GConv_meta(nn.Module):
     def __init__(self, in_channels, out_channels, drop=0.8, bias=True):
         super(GConv_meta, self).__init__()
@@ -104,7 +103,7 @@ class GConv_meta(nn.Module):
         out = self.acti_fun(out)
         return out
 
-# 定义相似度图卷积
+# Define similarity map convolution
 class GCN_sim(nn.Module):
     def __init__(self, in_channels, out_channels, bias=True):
         super(GCN_sim, self).__init__()
@@ -139,43 +138,42 @@ class GCN_sim(nn.Module):
         return self.act(out)
 
 
-# 消融图卷积换成线性层
+# ablation experiment
 class SimpleLinearModel(nn.Module):
     def __init__(self, in_channels, out_channels, bias=True):
         super(SimpleLinearModel, self).__init__()
-        self.fc = nn.Linear(in_channels, out_channels, bias=False)  # 输入到输出的线性层
-        self.kan = nn.Linear(in_channels, 64)  # 替换掉 KANLinear
+        self.fc = nn.Linear(in_channels, out_channels, bias=False)  # linear layer
+        self.kan = nn.Linear(in_channels, 64)  
         self.drop_out = nn.Dropout(0.3)  # dropout
-        self.act = nn.PReLU()  # 激活函数
-        self.lin = nn.Linear(in_channels, 64)  # 另一个线性层
+        self.act = nn.PReLU() 
+        self.lin = nn.Linear(in_channels, 64) 
         if bias:
             self.bias = nn.Parameter(torch.FloatTensor(64))
-            self.bias.data.fill_(0.0)  # 初始化偏置
+            self.bias.data.fill_(0.0)  
         else:
             self.register_parameter('bias', None)
 
         for model in self.modules():
-            self.weights_init(model)  # 初始化权重
+            self.weights_init(model) 
 
     def weights_init(self, model):
         if isinstance(model, nn.Linear):
-            nn.init.xavier_normal_(model.weight, gain=1.414)  # 使用 Xavier 初始化
+            nn.init.xavier_normal_(model.weight, gain=1.414)  
             if model.bias is not None:
                 model.bias.data.fill_(0.0)
 
     def forward(self, emb, flag):
-        # flag 变量决定是否使用 dropout
+        # The flag variable determines whether to use dropout
         if flag == 'yes':
-            emb = self.drop_out(emb)  # 进行 dropout
+            emb = self.drop_out(emb)  # dropout
 
-        emb_feat = self.fc(emb)  # 线性层处理特征
+        emb_feat = self.fc(emb)  
         if self.bias is not None:
-            emb_feat += self.bias  # 加入 bias
+            emb_feat += self.bias 
 
-        out = self.act(emb_feat)  # 激活函数作用在输出上
-        return out
+        out = self.act(emb_feat) 
 
-# 定义对比学习
+# Defining Comparative Learning
 class contrast_learning(nn.Module):
     def __init__(self, hidden, temperature, lambda_1):
         super(contrast_learning, self).__init__()
@@ -186,12 +184,12 @@ class contrast_learning(nn.Module):
         )
         self.temperature = temperature
         self.lambda_1 = lambda_1
-        # 对权重矩阵进行初始化
+
         for fc in self.project:
             if isinstance(fc, nn.Linear):
                 nn.init.xavier_normal_(fc.weight, gain=1.414)
 
-    # 计算两个视图之间的相似性用于后续的损失函数
+    # The similarity between the two views is calculated for the subsequent loss function
     def similarity(self, meta_view, sim_view):
         meta_view_norm = torch.norm(meta_view, dim=-1, keepdim=True)
         sim_view_norm = torch.norm(sim_view, dim=-1, keepdim=True)
@@ -201,7 +199,7 @@ class contrast_learning(nn.Module):
         return sim_matrix
 
     def forward(self, meta_, sim_, posSamplePairs):
-        # 将特征经过一层线性层进行投影
+        # Projection of features through a linear layer
         meta_project = self.project(meta_)
         sim_project = self.project(sim_)
         view_sim = self.similarity(meta_project, sim_project)
@@ -215,19 +213,19 @@ class contrast_learning(nn.Module):
 
         return self.lambda_1 * loss_meta + (1 - self.lambda_1) * loss_sim
 
-# 定义miRNA在图卷积层的嵌入
+# Defining miRNA embedding in graph convolutional layers
 class mi_embadding(nn.Module):
     def __init__(self, args):
         super(mi_embadding, self).__init__()
         self.args = args
-        # 自定义图卷积
+       
         self.gcn = GCN_sim(self.args.fm, self.args.fm)
 
-        # 以下用于消融
+        # For ablation experiments
         self.lin1 = SimpleLinearModel(self.args.fm, self.args.fm)
         self.lin2 = SimpleLinearModel(self.args.fm, self.args.fm)
 
-        # 图卷积后各个视图堆叠成立方体进一步提取特征用于消融
+        # Pipeline Attention
         self.mi_fc1 = nn.Linear(in_features=6,
                                 out_features=5 * 6)
         self.mi_fc2 = nn.Linear(in_features=5 * 6,
@@ -235,11 +233,10 @@ class mi_embadding(nn.Module):
         self.sigmoidx = nn.Sigmoid()
         self.cnn_mi = nn.Conv2d(in_channels=6, out_channels=1,
                                 kernel_size=(1, 1), stride=1, bias=True)
-        # 将各个视图的特征进行拼接然后使用主成分进行提取用于消融
+        # PCA
         self.pca = PCA(n_components=64)
         # self.umap = umap.UMAP(n_components=64) # 主成分变体
         self.lle = LocallyLinearEmbedding(n_neighbors=8, n_components=64, method='standard')
-        # 最后的消融也可以使用各个视图相加取平均的结果
 
 
         # self.mi_fc1 = nn.Linear(in_features=self.args.view * self.args.gcn_layers,
@@ -252,15 +249,15 @@ class mi_embadding(nn.Module):
 
 
     def forward(self, sim_set, emb, flag):
-        # 使用随机初始化的特征不使用Node2Vec
+        # Using randomly initialized features without Node2Vec
         x_m = torch.randn(728, 64).to(device)
-        # 使用SNF融合的miRNA特征
+        # Characterization of miRNAs using SNF fusions
         # mi_final_1 =  self.gcn(emb['miRNA'], sim_set['miRNA']['mi_final_mat'].to(device), flag)
         # mi_final_2 = self.gcn(mi_final_1, sim_set['miRNA']['mi_final_mat'].to(device), flag)
 
-        # 使用未融合的miRNA的特征
-        # 针对于新整理的数据集 多视图
-        # mi_gua_1 = self.gcn(emb, sim_set['miRNA_mut']['mi_gua'].to(device), flag) # 以下六行用于-1，+1
+        # Characterization using unfused miRNAs
+        # For newly organized datasets Multiple views
+        # mi_gua_1 = self.gcn(emb, sim_set['miRNA_mut']['mi_gua'].to(device), flag)
         # # mi_gua_2 = self.gcn(mi_gua_1, sim_set['miRNA_mut']['mi_gua'].to(device), flag)
         # mi_cos_1 = self.gcn(emb, sim_set['miRNA_mut']['mi_cos'].to(device), flag)
         # # mi_cos_2 = self.gcn(mi_cos_1, sim_set['miRNA_mut']['mi_cos'].to(device), flag)
@@ -274,7 +271,7 @@ class mi_embadding(nn.Module):
         mi_fun_1 = self.gcn(emb['miRNA'], sim_set['miRNA_mut']['mi_fun'].to(device), flag)
         mi_fun_2 = self.gcn(mi_fun_1, sim_set['miRNA_mut']['mi_fun'].to(device), flag)
 
-        # 使用随机初始特征
+        # Using random initial features
         # mi_gua_1 = self.gcn(x_m, sim_set['miRNA_mut']['mi_gua'].to(device), flag)
         # mi_gua_2 = self.gcn(mi_gua_1, sim_set['miRNA_mut']['mi_gua'].to(device), flag)
         # mi_cos_1 = self.gcn(x_m, sim_set['miRNA_mut']['mi_cos'].to(device), flag)
@@ -282,7 +279,7 @@ class mi_embadding(nn.Module):
         # mi_fun_1 = self.gcn(x_m, sim_set['miRNA_mut']['mi_fun'].to(device), flag)
         # mi_fun_2 = self.gcn(mi_fun_1, sim_set['miRNA_mut']['mi_fun'].to(device), flag)
 
-        # 图卷积替换线性层进行消融
+        # Graph Convolutional Replacement of Linear Layers for Ablation Experiments
         # mi_gua_1 = self.lin1(emb['miRNA'], flag)
         # mi_gua_2 = self.lin2(mi_gua_1, flag)
         # mi_cos_1 = self.lin1(emb['miRNA'], flag)
@@ -291,11 +288,11 @@ class mi_embadding(nn.Module):
         # mi_fun_2 = self.lin2(mi_fun_1, flag)
 
 
-        # 针对于新整理的数据集 SNF融合视图
+        # SNF fusion view for newly organized datasets
         # mi_final_1 = self.gcn(emb['miRNA'], sim_set['miRNA_snf']['mi_final'].to(device), flag)
         # mi_final_2 = self.gcn(mi_final_1, sim_set['miRNA_snf']['mi_final'].to(device), flag)
 
-        # 使用堆叠立方体特征进行提取
+        # Pipeline Attention
         # XM = torch.cat((mi_gene_1,mi_gene_2,mi_gua_1,mi_gua_2,mi_seq_1,mi_seq_2,mi_tf_1,mi_tf_2,mi_ex_1,mi_ex_2,mi_pa_1,mi_pa_2), 1).t()
         # XM = torch.cat((mi_gua_1, mi_gua_2, mi_cos_1, mi_cos_2, mi_fun_1, mi_fun_2), 1)
         # XM = XM.view(1, 6, 64, -1)
@@ -315,8 +312,8 @@ class mi_embadding(nn.Module):
         #
         # x = self.cnn_mi(XM_channel_attention)
         # mi_emb = x.view(self.args.fm, 728).t()
-        # 使用主成分进行特征提取
-        # 新整理数据集的XM
+        # PCA
+        # XM for newly organized datasets
         XM = torch.cat((mi_gua_1,mi_gua_2,mi_cos_1,mi_cos_2,mi_fun_1,mi_fun_2), 1)
         # XM = torch.cat((mi_gua_1, mi_gua_2, mi_cos_1,mi_cos_2), 1)
         # XM = torch.cat((mi_gua_1,mi_cos_1,mi_fun_1), 1)
@@ -327,23 +324,23 @@ class mi_embadding(nn.Module):
         XM = torch.Tensor.cpu(torch.from_numpy(XM)).to(device)
         mi_emb = XM
 
-        # 使用加权求平均进行特征提取
+        # Feature extraction using weighted averaging
         # mi_emb = (mi_gua_1+mi_gua_2+mi_cos_1+mi_cos_2+mi_fun_1+mi_fun_2)/6
 
         return mi_emb.float()
 
-# 定义disease在图卷积层的嵌入
+# Define the embedding of disase in the graph convolutional layer
 class di_embadding(nn.Module):
     def __init__(self, args):
         super(di_embadding, self).__init__()
         self.args = args
-        # 自定义图卷积
+
         self.gcn = GCN_sim(self.args.fd, self.args.fd)
 
-        # 以下用于消融
+        #ablation experiment
         self.lin1 = SimpleLinearModel(self.args.fd, self.args.fd)
         self.lin2 = SimpleLinearModel(self.args.fd, self.args.fd)
-        # 图卷积后的各个视图堆叠成立方体进一步提取特征用于消融
+        # Pipeline Attention
         self.di_fc1 = nn.Linear(in_features=6,
                                 out_features=5 * 6)
         self.di_fc2 = nn.Linear(in_features=5* 6,
@@ -351,12 +348,11 @@ class di_embadding(nn.Module):
         self.sigmoidy = nn.Sigmoid()
         self.cnn_di = nn.Conv2d(in_channels=6, out_channels=1,
                                 kernel_size=(1, 1), stride=1, bias=True)
-        # 将各个视图的特征进行拼接然后使用主成分进行提取用于消融
+        # PCA
         self.pca = PCA(n_components=64)
         # self.umap = umap.UMAP(n_components=64)
         self.lle = LocallyLinearEmbedding(n_neighbors=8, n_components=64, method='standard')
-        # self.lin = nn.Linear(12,64)  # 线性变换主要改变样本数较小带来的维度影响
-        # 最后的消融也可以使用各个视图相加取平均的结果
+        # self.lin = nn.Linear(12,64)  
 
         # self.di_fc1 = nn.Linear(in_features=self.args.view * self.args.gcn_layers,
         #                        out_features=5 * self.args.view * self.args.gcn_layers)
@@ -367,16 +363,16 @@ class di_embadding(nn.Module):
         #                        kernel_size=(1, 1), stride=1, bias=True)
 
     def forward(self,sim_set, emb, flag):
-        # 使用随机初始化的特征不使用Node2Vec
+        # Using randomly initialized features without Node2Vec
         d_m = torch.randn(884, 64).to(device)
-        # 使用SNF融合的疾病特征
+        # Disease characterization using SNF fusion
         # di_final_1 =  self.gcn(emb['disease'], sim_set['disease']['di_final_mat'].to(device), flag)
         # di_final_2 = self.gcn(di_final_1, sim_set['disease']['di_final_mat'].to(device), flag)
 
-        # 使用未融合的疾病特征
-        # 针对新整理的数据集
+        # Use of unfused disease characteristics
+        # For newly organized data sets
 
-        # di_gua_1 = self.gcn(emb, sim_set['disease_mut']['di_gua'].to(device), flag) # 以下六行用于-1，+1
+        # di_gua_1 = self.gcn(emb, sim_set['disease_mut']['di_gua'].to(device), flag) # 
         # # di_gua_2 = self.gcn(di_gua_1, sim_set['disease_mut']['di_gua'].to(device), flag)
         # di_cos_1 = self.gcn(emb, sim_set['disease_mut']['di_cos'].to(device), flag)
         # # di_cos_2 = self.gcn(di_cos_1, sim_set['disease_mut']['di_cos'].to(device), flag)
@@ -390,7 +386,7 @@ class di_embadding(nn.Module):
         di_sem_1 = self.gcn(emb['disease'], sim_set['disease_mut']['di_sem'].to(device), flag)
         di_sem_2 = self.gcn(di_sem_1, sim_set['disease_mut']['di_sem'].to(device), flag)
 
-        # 使用随机初始特征
+        # Using random initial features
         # di_gua_1 = self.gcn(d_m, sim_set['disease_mut']['di_gua'].to(device), flag)
         # di_gua_2 = self.gcn(di_gua_1, sim_set['disease_mut']['di_gua'].to(device), flag)
         # di_cos_1 = self.gcn(d_m, sim_set['disease_mut']['di_cos'].to(device), flag)
@@ -398,7 +394,7 @@ class di_embadding(nn.Module):
         # di_sem_1 = self.gcn(d_m, sim_set['disease_mut']['di_sem'].to(device), flag)
         # di_sem_2 = self.gcn(di_sem_1, sim_set['disease_mut']['di_sem'].to(device), flag)
 
-        # 图卷积替换线性层进行消融
+        # Graph Convolutional Replacement of Linear Layers for Ablation Experiments
         # di_gua_1 = self.lin1(emb['disease'], flag)
         # di_gua_2 = self.lin2(di_gua_1, flag)
         # di_cos_1 = self.lin1(emb['disease'], flag)
@@ -406,11 +402,11 @@ class di_embadding(nn.Module):
         # di_sem_1 = self.lin1(emb['disease'], flag)
         # di_sem_2 = self.lin2(di_sem_1, flag)
 
-        # 针对于新整理的数据集 SNF融合视图
+        # SNF fusion view for newly organized datasets
         # di_final_1 = self.gcn(emb['disease'], sim_set['disease_snf']['di_final'].to(device), flag)
         # di_final_2 = self.gcn(di_final_1, sim_set['disease_snf']['di_final'].to(device), flag)
 
-        # 使用堆叠立方体特征进行提取
+        # Pipeline Attention
         # XM = torch.cat((di_sem_1,di_gua_2,di_gua_1,di_gua_2), 1).t()
         # XM = torch.cat((di_gua_1, di_gua_2, di_cos_1, di_cos_2, di_sem_1, di_sem_2), 1)
         # XM = XM.view(1, 6, self.args.fd, -1)
@@ -430,8 +426,8 @@ class di_embadding(nn.Module):
         #
         # x = self.cnn_di(XM_channel_attention)
         # di_emb = x.view(self.args.fd, 884).t()
-        # 使用主成分进行特征提取
-        # 新整理好的数据集的XM
+        # PCA
+        # XM of the newly organized dataset
         XM = torch.cat((di_gua_1,di_gua_2,di_cos_1,di_cos_2,di_sem_1,di_sem_2), 1)
         # XM = torch.cat((di_gua_1, di_gua_2, di_cos_1,di_cos_2), 1)
         # XM = torch.cat((di_gua_1,di_cos_1,di_sem_1), 1)
@@ -441,11 +437,11 @@ class di_embadding(nn.Module):
         XM = torch.Tensor.cpu(torch.from_numpy(XM)).to(device)
         # XM = self.lin(XM)
         di_emb = XM
-        # 使用加权求平均进行特征提取
+        # Feature extraction using weighted averaging
         # di_emb = (di_gua_1+di_gua_2+di_cos_1+di_cos_2+di_sem_1+di_sem_2)/6
         return di_emb.float()
 
-# 定义元路径特征的提取
+# Defining the extraction of meta-path features
 class meta_emb(nn.Module):
     def __init__(self, args):
         super(meta_emb, self).__init__()
@@ -467,7 +463,7 @@ class meta_emb(nn.Module):
         meta_di_emb = self.SLA(list_view_di)
         return meta_mi_emb, meta_di_emb
 
-# 定义多层感知机用于预测
+# MLP for predicting
 class MLP(nn.Module):
     def __init__(self):
         super(MLP, self).__init__()
@@ -505,7 +501,7 @@ class KAN(nn.Module):
         out = self.linear(pair_feat)
         return torch.sigmoid(out)
 
-# 定义模型guet
+# SMCLMDA
 class SMCLMDA(nn.Module):
     def __init__(self, args):
         super(SMCLMDA, self).__init__()
@@ -513,7 +509,7 @@ class SMCLMDA(nn.Module):
         self.mi_emb = mi_embadding(args)
         self.di_emb = di_embadding(args)
         self.meta_emb = meta_emb(args)
-        # 构建对比学习模块
+        # Building Contrastive Learning Modules
         self.CL_mi = contrast_learning(args.cl_hidden, args.temperature, args.lambda_1)
         self.CL_di = contrast_learning(args.cl_hidden, args.temperature, args.lambda_1)
         self.LayerNorm = torch.nn.LayerNorm(64)
@@ -528,8 +524,8 @@ class SMCLMDA(nn.Module):
         di_emb = self.di_emb(sim_set, emb, 'yes')
 
 
-        meta_mi_emb, meta_di_emb = self.meta_emb(emb, meta_set) # 获取元路径的特征
-        # 进行对比学习
+        meta_mi_emb, meta_di_emb = self.meta_emb(emb, meta_set) # Getting a characterization of meta-paths
+        # constrastive learning
         loss_cl = self.CL_mi(meta_mi_emb, mi_emb, pos_miRNA) + self.CL_di(meta_di_emb, di_emb, pos_disease)
         # mi_emb_1 = self.mi_emb(sim_set, mda, 'no')
         # di_emb_1 = self.di_emb(sim_set, mda.T, 'no')
