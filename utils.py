@@ -11,7 +11,7 @@ os.environ['KMP_DUPLICATE_LIB_OK']='TRUE'
 os.environ['CUDA_LAUNCH_BLOCKING'] = '0'
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-###############SNF进行相似度矩阵非线性融合##############
+###############SNF for nonlinear fusion of similarity matrices##############
 def read_csv(path):
     with open(path, 'r', newline='') as csv_file:
         reader = csv.reader(csv_file)
@@ -89,38 +89,37 @@ def disease_updating(S1,S2,S3, P1,P2,P3):
     return P
 
 
-# 采用SNF进行多源特征融合
+# Multi-source feature fusion using SNF
 def get_syn_sim (k1, k2):#k1=78，k2=37
-    ### 两个miRAN相似性矩阵缺失值使用0进行填充
 
-    disease_semantic_sim = read_csv('data/mir2disease+lunwen/-1-0-+1/disease_sim/disSSim.csv') # 疾病语义相似性
-    disease_GIP_sim = read_csv('data/mir2disease+lunwen/-1-0-+1/disease_sim/disGIPSim.csv') # 疾病的高斯核相似性
-    disease_cos_sim = read_csv('data/mir2disease+lunwen/-1-0-+1/disease_sim/disCosSim.csv') # 疾病的余弦相似性
+    disease_semantic_sim = read_csv('data/mir2disease+lunwen/-1-0-+1/disease_sim/disSSim.csv')
+    disease_GIP_sim = read_csv('data/mir2disease+lunwen/-1-0-+1/disease_sim/disGIPSim.csv') 
+    disease_cos_sim = read_csv('data/mir2disease+lunwen/-1-0-+1/disease_sim/disCosSim.csv') 
 
-    miRNA_GIP_sim = read_csv("data/mir2disease+lunwen/-1-0-+1/miRNA_sim/miGIPSim.csv") # 基于GIP的miRNA相似性
-    miRNA_cos_sim = read_csv("data/mir2disease+lunwen/-1-0-+1/miRNA_sim/miCosSim.csv") # 基于cosine的miRNA相似性
-    miRNA_func_sim = read_csv("data/mir2disease+lunwen/-1-0-+1/miRNA_sim/miGIPSim.csv") # 基于func的miRNA相似性
+    miRNA_GIP_sim = read_csv("data/mir2disease+lunwen/-1-0-+1/miRNA_sim/miGIPSim.csv") 
+    miRNA_cos_sim = read_csv("data/mir2disease+lunwen/-1-0-+1/miRNA_sim/miCosSim.csv") 
+    miRNA_func_sim = read_csv("data/mir2disease+lunwen/-1-0-+1/miRNA_sim/miGIPSim.csv")
 
 
-# 对miRNA相似性矩阵进行归一化
+# Normalization of the miRNA similarity matrix
     mi_GIP_sim_norm = new_normalization(miRNA_GIP_sim)
     mi_cos_sim_norm = new_normalization(miRNA_cos_sim)
     mi_func_sim_norm = new_normalization(miRNA_func_sim)
 
-# 对miRNA相似性矩阵求取knn
+# Finding knn for miRNA similarity matrices
     mi_GIP_knn = KNN_kernel(miRNA_GIP_sim, k1)
     mi_cos_knn = KNN_kernel(miRNA_cos_sim, k1)
     mi_func_knn = KNN_kernel(miRNA_func_sim, k1)
 
-# 迭代更新每个相似性网络
+# Iteratively update each similarity network
     Pmi= MiRNA_updating(mi_GIP_knn, mi_cos_knn, mi_func_knn, mi_GIP_sim_norm, mi_cos_sim_norm, mi_func_sim_norm)
     Pmi_final = (Pmi + Pmi.T)/2
-# 对疾病相似性矩阵进行归一化
+# Normalization of the disease similarity matrix
     dis_sem_norm = new_normalization(disease_semantic_sim)
     dis_GIP_norm = new_normalization(disease_GIP_sim)
     dis_cos_norm = new_normalization(disease_cos_sim)
 
-# 对疾病相似性矩阵进行求取knn
+# Disease similarity matrices are solved for knn
     dis_sem_knn = KNN_kernel(disease_semantic_sim, k2)
     dis_GIP_knn = KNN_kernel(disease_GIP_sim, k2)
     dis_cos_knn = KNN_kernel(disease_cos_sim, k2)
@@ -128,10 +127,10 @@ def get_syn_sim (k1, k2):#k1=78，k2=37
 
     Pdiease = disease_updating(dis_sem_knn, dis_GIP_knn, dis_cos_knn, dis_sem_norm, dis_GIP_norm, dis_cos_norm)
     Pdiease_final = (Pdiease+Pdiease.T)/2
-# 获得最终的miRNA，疾病相似性矩阵
+# Obtaining the final miRNA, Disease Similarity Matrix
     return Pmi_final, Pdiease_final
 
-# 以下代码用于获取融合的miRNA、disease特征
+# The following code is used to obtain fusion miRNA, disease characteristics
 # mi_final, di_final = get_syn_sim(78,37)
 # mi_final = pd.DataFrame(mi_final)
 # di_final = pd.DataFrame(di_final)
@@ -139,13 +138,13 @@ def get_syn_sim (k1, k2):#k1=78，k2=37
 # di_final.to_csv('di_final.csv', header=False, index=False)
 
 
-# 添加自环
+# Add self-loop
 def self_hoop(matrix):
     for i in matrix.shape[0]:
         matrix[i][i] += 1
     return matrix
 
-# 度归一化
+# degree normalization
 def normalized(wmat):
     deg = torch.diag(torch.sum(wmat, dim=0))
     degpow = torch.pow(deg, -0.5)
@@ -171,7 +170,7 @@ def set_seed(seed):
     np.random.seed(seed)
     torch.cuda.manual_seed(seed)
     np.random.seed(seed)
-    torch.manual_seed(seed)  # 设置了Pytorch库的随机种子
+    torch.manual_seed(seed)  
 
 def get_edge_index(matrix):
     edge_index = [[], []]
@@ -186,17 +185,17 @@ def get_edge_index(matrix):
 def get_data():
     sim_set = dict()
 
-    # 获取使用SNF融合的miRNA、disease相似度矩阵、边集合
+    # Obtaining miRNAs using SNF fusion, disease similarity matrix, edge set
     mi_final = read_csv('data/mir2disease+lunwen/-1-0-+1/miRNA_sim/mi_final.csv').to(device)
     mi_final_edges = get_edge_index(mi_final).to(device)
 
     di_final = read_csv('data/mir2disease+lunwen/-1-0-+1/disease_sim/di_final.csv').to(device)
     di_final_edges = get_edge_index(di_final).to(device)
-    # 保存使用SNF融合的特征
+    # Preservation of features fused using SNF
     sim_set['miRNA_snf'] = {'mi_final': mi_final, 'mi_final_edges': mi_final_edges}
     sim_set['disease_snf'] = {'di_final': di_final, 'di_final_edges': di_final_edges}
 
-    # 加载没有融合的多视图特征
+    # Loading multi-view features that are not fused
     mi_gua = read_csv('data/mir2disease+lunwen/-1-0-+1/miRNA_sim/miGIPSim.csv').to(device)
     # mi_gua = normalized(mi_gua).to(device)
     mi_gua_edges = get_edge_index(mi_gua).to(device)
@@ -219,34 +218,34 @@ def get_data():
 
     sim_set['miRNA_mut'] = {'mi_gua': mi_gua, 'mi_gua_edges': mi_gua_edges, 'mi_cos': mi_cos, 'mi_cos_edges': mi_cos_edges, 'mi_fun':mi_fun, 'mi_fun_edges': mi_fun_edges}
     sim_set['disease_mut'] = {'di_gua': di_gua, 'di_gua_edges': di_gua_edges, 'di_cos': di_cos, 'di_cos_edges': di_cos_edges, 'di_sem': di_sem, 'di_sem_edges': di_sem_edges}
-    # 定义保存数据的目录和文件名
+    # Define the directory and file name where the data will be saved
     parent_dir = "data/mir2disease+lunwen/-1-0-+1/predata"
     filename = "sim_set.pkl"
     file_path = os.path.join(parent_dir, filename)
 
-    # 确保目录存在
+    # Make sure the catalog exists
     os.makedirs(parent_dir, exist_ok=True)
 
-    # 保存字典到文件
+    # Save dictionary to file
     with open(file_path, 'wb') as file:
         pickle.dump(sim_set, file)
 
     print(f"sim_set saved to {file_path}")
     return sim_set
-# 将中间预处理的结果保存到pkl文件中
+# Save the results of intermediate preprocessing to a pkl file
 # get_data()
 
-# 加载正负样本用于训练和测试
+# Load positive and negative samples for training and testing
 def load_pos_neg():
     pos_neg_pair_fengceng = dict()
-    all_train_pos = pd.read_csv('data/HMDD V3_2+yanzheng(yinguo)/train/all_train_pos.csv', header=None).to_numpy() # 分层抽样已经划分好的训练集正样本：3436
-    all_test_pos = pd.read_csv('data/HMDD V3_2+yanzheng(yinguo)/test/all_test_pos.csv', header=None).to_numpy() # 分层抽样已经划分好的测试集正样本：792
-    all_neg = pd.read_csv('data/HMDD V3_2+yanzheng(yinguo)/all_neg.csv', header=None).to_numpy() # 所有负样本：157342
-    #yanzheng_test_pos_neg = pd.read_csv('data/HMDD V3_2+yanzheng(yinguo)/test/yanzheng_test_pos_neg.csv', header=None).to_numpy() # 所有因果关联（1）和非因果关联（0）的预测
-    # 以下是分层抽样好的十倍交叉测试
-    # all_train_pos = pd.read_csv('data/HMDD V3_2+yanzheng(yinguo)/10-fold_/train/train_10_pos.csv', header=None).to_numpy()  # 加载所有10折中正样本
-    # all_test_pos = pd.read_csv('data/HMDD V3_2+yanzheng(yinguo)/10-fold_/test/test_10_pos.csv', header=None).to_numpy()  # 加载所有10折中正样本
-    # 打乱正负样本
+    all_train_pos = pd.read_csv('data/HMDD V3_2+yanzheng(yinguo)/train/all_train_pos.csv', header=None).to_numpy() 
+    all_test_pos = pd.read_csv('data/HMDD V3_2+yanzheng(yinguo)/test/all_test_pos.csv', header=None).to_numpy() 
+    all_neg = pd.read_csv('data/HMDD V3_2+yanzheng(yinguo)/all_neg.csv', header=None).to_numpy() 
+    #yanzheng_test_pos_neg = pd.read_csv('data/HMDD V3_2+yanzheng(yinguo)/test/yanzheng_test_pos_neg.csv', header=None).to_numpy() 
+   
+    # all_train_pos = pd.read_csv('data/HMDD V3_2+yanzheng(yinguo)/10-fold_/train/train_10_pos.csv', header=None).to_numpy()  
+    # all_test_pos = pd.read_csv('data/HMDD V3_2+yanzheng(yinguo)/10-fold_/test/test_10_pos.csv', header=None).to_numpy()  
+    # Disrupt positive and negative samples
     number_train_pos = list(range(all_train_pos.shape[0]))
     random.shuffle(number_train_pos)
     all_train_pos = all_train_pos[number_train_pos]
@@ -258,17 +257,17 @@ def load_pos_neg():
     number_all_neg = list(range(all_neg.shape[0]))
     random.shuffle(number_all_neg)
     all_neg = all_neg[number_all_neg]
-    # 训练集抽取相同数量的负样本进行训练
+    # The training set is trained by taking the same number of negative samples
     all_train_neg = all_neg[:all_train_pos.shape[0], :]
 
-    # 从 all_neg 中删除所有在 all_train_neg 中的行
-    train_neg_set = set(map(tuple, all_train_neg))  # 以行的前三列作为唯一标识
+    # Remove all rows in all_train_neg from all_neg
+    train_neg_set = set(map(tuple, all_train_neg))  # Use the first three columns of a row as a unique identifier
     all_neg_filtered = np.array([row for row in all_neg if tuple(row) not in train_neg_set])
 
     train_pos_neg = np.concatenate((all_train_pos, all_train_neg), axis=0)
     #train_pos_neg_ = np.concatenate((all_train_pos, all_neg), axis=0)
     test_pos_neg = np.concatenate((all_test_pos, all_neg_filtered), axis=0)
-    # 将结果再次打乱然后保存在pkl文件中
+    # Scramble the results again and save them in the pkl file
     number_all_train = list(range(train_pos_neg.shape[0]))
     random.shuffle(number_all_train)
     train_pos_neg = train_pos_neg[number_all_train]
@@ -287,20 +286,20 @@ def load_pos_neg():
 
     #pos_neg_pair_fengceng = {'train': train_pos_neg, 'train_': train_pos_neg_, 'test': yanzheng_test_pos_neg}
     pos_neg_pair_fengceng = {'train': train_pos_neg, 'test': test_pos_neg}
-    # 定义保存数据的目录和文件名
+    # Define the directory and file name where the data will be saved
     parent_dir = "data/HMDD V3_2+yanzheng(yinguo)/predata"
     filename = "pos_neg_pair_fengceng.pkl"
     file_path = os.path.join(parent_dir, filename)
-    # 确保目录存在
+    # Make sure the catalog exists
     os.makedirs(parent_dir, exist_ok=True)
-    # 保存字典到文件
+    # Save dictionary to file
     with open(file_path, 'wb') as file:
         pickle.dump(pos_neg_pair_fengceng, file)
     print(f"pos_neg_pair_fengceng saved to {file_path}")
     return pos_neg_pair_fengceng
 
 # load_pos_neg()
-# 构造十折或者五折交叉
+# Ten folds (five folds) cross validation
 def get_fold():
     path = "data/mir2disease+lunwen/-1-0-+1/mirBase_lunwen_101_MDA_.csv"
 
@@ -314,19 +313,19 @@ def get_fold():
     Divide_neg = []
     pos_neg_pair_fengceng = dict()
 
-    # 读取csv并保存正负样本
+    # Read csv and save positive and negative samples
     with open(path, 'r', newline='') as csv_file:
         reader = csv.reader(csv_file)
         tt = 0
         for line in reader:
             for i in range(len(line)):
                 if float(line[i]) == 1:
-                    Divide.append("222")  # 正样本
+                    Divide.append("222")  # positive sample
                     Rowid.append(tt)
                     Cloumnid.append(i)
                     Labels.append(int(float(line[i])))
                 elif float(line[i])==-1:
-                    Divide_neg.append("111")  # 负样本
+                    Divide_neg.append("111")  # negative sample
                     Rowid_neg.append(tt)
                     Cloumnid_neg.append(i)
                     Labels_neg.append(int(float(line[i])))
@@ -337,7 +336,7 @@ def get_fold():
     # print(len(Rowid), len(Cloumnid), len(Labels), len(Divide))
     # print(Rowid[0], Cloumnid[0], Labels[0], Divide[0])
 
-    #   整合正负样本的4列，并进行打乱
+    #   Integrate the 4 columns of positive and negative samples and disrupt
     Data = [Rowid, Cloumnid, Labels, Divide]
     Data_neg = [Rowid_neg, Cloumnid_neg, Labels_neg, Divide_neg]
 
@@ -357,37 +356,36 @@ def get_fold():
 
         clo = list(range(Data_neg.shape[0]))
         random.shuffle(clo)
-        num = Data.shape[0] / 5 * 4  # 取和9折正样本相同数量的负样本
+        num = Data.shape[0] / 5 * 4  # Take the same number of negative samples
         train_neg = Data_neg[clo][:int(num), :]
 
-        #   重新设置训练和测试标签
+        #   Reset training and test labels
         for i in range(train_neg.shape[0]):
             train_neg[i][3] = "222"
         for i in range(test_pos.shape[0]):
             test_pos[i][3] = "111"
 
-        # 删除 Data_neg 中包含在 train_neg 中的所有行
-        train_neg_set = set(map(tuple, train_neg[:, :3]))  # 以前三列作为唯一标识
+        # Delete all rows in Data_neg that are contained in train_neg.
+        train_neg_set = set(map(tuple, train_neg[:, :3]))  # The first three columns are used as unique identifiers
         Data_neg_filtered = np.array([row for row in Data_neg if tuple(row[:3]) not in train_neg_set])
 
-        # 从 Data_neg_filtered 中随机选择与 test_pos 相同数量的样本
+        # Randomly select the same number of samples as test_pos from Data_neg_filtered
         # if Data_neg_filtered.shape[0] >= test_pos.shape[0]:
         #     sampled_neg = Data_neg_filtered[
         #         np.random.choice(Data_neg_filtered.shape[0], test_pos.shape[0], replace=False)]
         # else:
-        #     raise ValueError("Data_neg_filtered 中的样本数量少于 test_pos 样本数量，无法选择相同数量的样本")
+        #     raise ValueError("The number of samples in Data_neg_filtered is less than the number of samples in test_pos, so the same number of samples cannot be selected.")
 
-        # 最终组合训练和测试集
-        #   最终   组合训练和测试集
+        # Final combined training and test set
         train = np.concatenate((train_pos, train_neg), axis=0)
         test = np.concatenate((test_pos, Data_neg_filtered), axis=0)
-        # 将 train 中第三列的 -1 替换为 0
+        # Replace -1 with 0 in the third column of train.
         train[:, 2][train[:, 2] == '-1'] = 0
 
-        # 将 test 中第三列的 -1 替换为 0
+        # Replace -1 with 0 in the third column of test.
         test[:, 2][test[:, 2] == '-1'] = 0
 
-        # 再次打乱数据
+        # Upsetting the data again
         li = list(range(train.shape[0]))
         random.shuffle(li)
         train = train[li].astype(int)
@@ -395,22 +393,22 @@ def get_fold():
         random.shuffle(li)
         test = test[li].astype(int)
         pos_neg_pair_fengceng = {'train': train, 'test': test}
-        # 定义保存数据的目录和文件名
+        # Define the directory and file name where the data will be saved
         parent_dir = "data/mir2disease+lunwen/-1-0-+1/5-fold"
         filename = f"pos_neg_pair_5_{fold+1}.pkl"
         file_path = os.path.join(parent_dir, filename)
-        # 确保目录存在
+        # Make sure the catalog exists
         os.makedirs(parent_dir, exist_ok=True)
-        # 保存字典到文件
+        # Save dictionary to file
         with open(file_path, 'wb') as file:
             pickle.dump(pos_neg_pair_fengceng, file)
         print(f"pos_neg_pair_5_{fold+1} saved to {file_path}")
-        # 保存的文件中0：miRNA索引，1：disease索引，2：标签，3：没用
+        # Saved files with 0: miRNA index, 1: disease index, 2: label, 3: useless
     return pos_neg_pair_fengceng
 # get_fold()
 
 
-# 获取经过分层抽样已经划分好的关联
+# Get the associations that have been partitioned after stratified sampling
 def get_fengceng():
     path = "data/HMDD v_4/hmdd4_MDA_.csv"
     path1 = "data/HMDD v_4/fenceng/h4_fenceng_train_pos_mda.csv"
@@ -445,19 +443,19 @@ def get_fengceng():
     Divide_neg2 = []
     pos_neg_pair_fengceng = dict()
 
-    # 读取csv并保存正负样本
+    # Read csv and save positive and negative samples
     with open(path, 'r', newline='') as csv_file:
         reader = csv.reader(csv_file)
         tt = 0
         for line in reader:
             for i in range(len(line)):
                 if float(line[i]) == 1:
-                    Divide.append("222")  # 正样本
+                    Divide.append("222")  # positive sample
                     Rowid.append(tt)
                     Cloumnid.append(i)
                     Labels.append(int(float(line[i])))
                 else:
-                    Divide_neg.append("111")  # 负样本
+                    Divide_neg.append("111")  # negative sample
                     Rowid_neg.append(tt)
                     Cloumnid_neg.append(i)
                     Labels_neg.append(int(float(line[i])))
@@ -470,12 +468,12 @@ def get_fengceng():
         for line1 in reader1:
             for i in range(len(line1)):
                 if float(line1[i]) == 1:
-                    Divide1.append("222")  # 正样本
+                    Divide1.append("222")  # positive sample
                     Rowid1.append(tt1)
                     Cloumnid1.append(i)
                     Labels1.append(int(float(line1[i])))
                 else:
-                    Divide_neg1.append("111")  # 负样本
+                    Divide_neg1.append("111")  # negative sample
                     Rowid_neg1.append(tt1)
                     Cloumnid_neg1.append(i)
                     Labels_neg1.append(int(float(line1[i])))
@@ -488,12 +486,12 @@ def get_fengceng():
         for line2 in reader2:
             for i in range(len(line2)):
                 if float(line2[i]) == 1:
-                    Divide2.append("222")  # 正样本
+                    Divide2.append("222")  # positive sample
                     Rowid2.append(tt2)
                     Cloumnid2.append(i)
                     Labels2.append(int(float(line2[i])))
                 else:
-                    Divide_neg2.append("111")  # 负样本
+                    Divide_neg2.append("111")  #negative sample
                     Rowid_neg2.append(tt2)
                     Cloumnid_neg2.append(i)
                     Labels_neg2.append(int(float(line2[i])))
@@ -503,9 +501,9 @@ def get_fengceng():
     # print(len(Rowid), len(Cloumnid), len(Labels), len(Divide))
     # print(Rowid[0], Cloumnid[0], Labels[0], Divide[0])
 
-    #   整合负样本的4列，并进行打乱
+    # Integrate the 4 columns of the negative samples and disrupt them
     Data_neg = [Rowid_neg, Cloumnid_neg, Labels_neg, Divide_neg]
-    Data_neg = np.array(Data_neg).T   # 所有的负样本
+    Data_neg = np.array(Data_neg).T   # All negative samples
 
 
 
@@ -518,26 +516,25 @@ def get_fengceng():
 
     clo = list(range(Data_neg.shape[0]))
     random.shuffle(clo)
-    num = train_pos.shape[0]  # 训练集中取正样本相同数量的负样本
+    num = train_pos.shape[0]  # Take the same number of negative samples as positive samples in the training set
     train_neg = Data_neg[clo][:int(num), :]
 
 
-    # 删除 Data_neg 中包含在 train_neg 中的所有行
-    train_neg_set = set(map(tuple, train_neg[:, :3]))  # 以前三列作为唯一标识
-    Data_neg_filtered = np.array([row for row in Data_neg if tuple(row[:3]) not in train_neg_set]) # 这些是不包含训练集的所有负样本
+    # Delete all rows in Data_neg that are contained in train_neg.
+    train_neg_set = set(map(tuple, train_neg[:, :3]))  # The first three columns are used as unique identifiers
+    Data_neg_filtered = np.array([row for row in Data_neg if tuple(row[:3]) not in train_neg_set]) # These are all negative samples without the training set
 
-    # 从 Data_neg_filtered 中随机选择与 test_pos 相同数量的样本
+    # Randomly select the same number of samples as test_pos from Data_neg_filtered
     # if Data_neg_filtered.shape[0] >= test_pos.shape[0]:
     #     sampled_neg = Data_neg_filtered[
     #         np.random.choice(Data_neg_filtered.shape[0], test_pos.shape[0], replace=False)]
     # else:
-    #     raise ValueError("Data_neg_filtered 中的样本数量少于 test_pos 样本数量，无法选择相同数量的样本")
+    #     raise ValueError("The number of samples in Data_neg_filtered is less than the number of samples in test_pos, so the same number of samples cannot be selected.")
 
-    # 最终组合训练和测试集
-    #   最终   组合训练和测试集
+    # Final combined training and test set
     train = np.concatenate((train_pos, train_neg), axis=0)
     test = np.concatenate((test_pos, Data_neg_filtered), axis=0)
-    # 再次打乱数据
+    # Upsetting the data again
     li = list(range(train.shape[0]))
     random.shuffle(li)
     train = train[li].astype(int)
@@ -546,24 +543,24 @@ def get_fengceng():
     test = test[li].astype(int)
 
     pos_neg_pair_fengceng = {'train': train, 'test': test}
-    # 定义保存数据的目录和文件名
+    # Define the directory and file name where the data will be saved
     parent_dir = "data/HMDD v_4/fenceng/"
     filename = f"pos_neg_pair_fengceng.pkl"
     file_path = os.path.join(parent_dir, filename)
-    # 确保目录存在
+    # Make sure the catalog exists
     os.makedirs(parent_dir, exist_ok=True)
-    # 保存字典到文件
+    # Save dictionary to file
     with open(file_path, 'wb') as file:
         pickle.dump(pos_neg_pair_fengceng, file)
     print(f"pos_neg_pair_fengceng saved to {file_path}")
-        # 保存的文件中0：miRNA索引，1：disease索引，2：标签，3：没用
+        # Saved files with 0: miRNA index, 1: disease index, 2: label, 3: useless
     return pos_neg_pair_fengceng
 # get_fengceng()
 
-# 构造元路径用于对比学习
+# Constructing meta-paths for comparative learning
 def construct_meta_path():
     """
-    这里我们构造了四条元路径：
+    Here we construct four meta-paths：
     M-D-M：miRNA-disease-miRNA   A * A.t()
     M-D-M-D-M：A * A.t() * A * A.t()
     D-M-D: A.t() * A
@@ -578,7 +575,7 @@ def construct_meta_path():
     mdmdm = torch.mm(torch.mm(mdm, mda), mda.t())
     dmd = torch.mm(mda.t(), mda)
     dmdmd = torch.mm(torch.mm(dmd, mda.t()), mda)
-    # 对不同元路径得出的相似性进行归一化
+    # Normalization of similarities derived from different meta-paths
     mdm_norm = normalized(mdm).to(device)
     mdmdm_norm = normalized(mdmdm).to(device)
     dmd_norm = normalized(dmd).to(device)
@@ -592,38 +589,38 @@ def construct_meta_path():
     meta_set['disease'] = {'dmd': dmd_norm, 'dmd_edges': dmd_edges, 'dmdmd': dmdmd_norm, 'dmdmd_edges': dmdmd_edges}
     meta_set['meta'] = {'mdm': mdm, 'dmd': dmd}
     meta_set['mda_whole'] = {'mda': mda}
-    # 定义保存数据的目录和文件名
+    # Define the directory and file name where the data will be saved
     parent_dir = "data/mir2disease+lunwen/-1-0-+1/predata"
     filename = "meta_set.pkl"
     file_path = os.path.join(parent_dir, filename)
 
-    # 确保目录存在
+    # Make sure the catalog exists
     os.makedirs(parent_dir, exist_ok=True)
 
-    # 保存字典到文件
+    # Save dictionary to file
     with open(file_path, 'wb') as file:
         pickle.dump(meta_set, file)
 
     print(f"meta_set saved to {file_path}")
     return meta_set, mdm, dmd
-# 将中间预处理的结果保存到pkl文件中
+# Save the results of intermediate preprocessing to a pkl file
 # construct_meta_path()
 
-# 构建元路径上的正样本对
+# Constructing pairs of positive samples on meta-paths
 def construct_meta_pos(mdm, dmd, pos_sum):
     print('----------------------------------start to construct postive sample pairs----------------------')
     mdm = mdm.detach().cpu().numpy()
     dmd = dmd.detach().cpu().numpy()
     dia_miRNA = sp.dia_matrix((np.ones(mdm.shape[0]), 0), shape=(mdm.shape[0], mdm.shape[1])).toarray()
     m_info = np.ones((mdm.shape[0], mdm.shape[1])) - dia_miRNA
-    mdm = mdm * m_info  # Hadamard乘积也为元素乘积
+    mdm = mdm * m_info  # Hadamard
     mdm = torch.tensor(mdm)
 
     pos_miRNA = np.zeros((mdm.shape[0], mdm.shape[1]))
     k_miRNA = 0
     for i in range(mdm.shape[0]):
         """
-        选取自身为正样本对，然后选取元路径中的pos_num - 1个作为正样本
+        Pick itself as a positive sample pair, then pick pos_num - 1 of the meta-paths as a positive sample
         """
         pos_miRNA[i, i] = 1
         rownon_index_miRNA = mdm[i].nonzero().view(-1)
@@ -635,7 +632,7 @@ def construct_meta_pos(mdm, dmd, pos_sum):
         else:
             pos_miRNA[i, rownon_index_miRNA] = 1
 
-    # 构建disease的正样本对
+    # Constructing positive sample pairs for DISEASE
     dia_disease = sp.dia_matrix((np.ones(dmd.shape[0]), 0), shape=(dmd.shape[0], dmd.shape[1])).toarray()
     d_info = np.ones((dmd.shape[0], dmd.shape[1])) - dia_disease
     dmd = dmd * d_info
@@ -654,10 +651,10 @@ def construct_meta_pos(mdm, dmd, pos_sum):
         else:
             pos_disease[j, rownon_index_disease] = 1
 
-    # 归一化
+    # normalize
     # pos_miRNA = normalize_sys(pos_miRNA)
     # pos_disease = normalize_sys(pos_disease)
-    # 返回的是一个掩码矩阵
+    # Returns a mask matrix
     return torch.tensor(pos_miRNA).to(device), torch.tensor(pos_disease).to(device)
 
 
