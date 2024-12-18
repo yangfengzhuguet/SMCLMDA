@@ -31,12 +31,12 @@ def get_args():
     parser.add_argument('--in_feat', type=int, default=64, help='Input layer of mlp')  # 64
     parser.add_argument('--out_feat', type=int, default=64, help='Output layer of mlp') # 64
 
-    # SLA语义层注意力
+    # SLA
     parser.add_argument('--sla_hidden', type=int, default=64, help='Input layer of SLAattention') # 64
     parser.add_argument('--sla_dropout', type=float, default=0.5, help='Dropout of SLAattention') # 0.1
 
 
-    # 模型参数设置
+    #
     parser.add_argument('--lr', type=float, default=0.001, help='The learning rate')
     parser.add_argument('--we_decay', type=float, default=1e-5, help='The weight decay')
     parser.add_argument('--epoch', type=int, default=300, help='The train epoch')
