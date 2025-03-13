@@ -7,7 +7,6 @@ import os
 from sklearn.decomposition import PCA
 # import umap
 from sklearn.manifold import TSNE
-from KAN_ import *
 from sklearn.manifold import LocallyLinearEmbedding
 import numpy as np
 os.environ['CUDA_LAUNCH_BLOCKING'] = '0'
@@ -484,23 +483,6 @@ class MLP(nn.Module):
         return torch.sigmoid(out)
 
 
-class KAN(nn.Module):
-    def __init__(self):
-        super(KAN, self).__init__()
-        self.kanlayer = KANLinear(64, 64)
-        self.decode = nn.Linear(64, 64, bias=True)
-        self.linear = nn.Linear(64, 1, bias=True)
-    def forward(self, mi_emb, di_emb, mi_index, di_index):
-        mi_feat = mi_emb[mi_index]
-        di_feat = di_emb[di_index]
-        mi_feat = self.kanlayer(mi_feat)
-        di_feat = self.kanlayer(di_feat)
-        pair_feat = mi_feat * di_feat
-        pair_feat = F.relu(self.decode(pair_feat))
-        pair_feat = F.dropout(pair_feat, 0.2)
-        out = self.linear(pair_feat)
-        return torch.sigmoid(out)
-
 # SMCLMDA
 class SMCLMDA(nn.Module):
     def __init__(self, args):
@@ -515,7 +497,6 @@ class SMCLMDA(nn.Module):
         self.LayerNorm = torch.nn.LayerNorm(64)
         self.linear = nn.Linear(64, 64)
         self.mlp = MLP()
-        self.kan = KAN()
     # def forward(self, sim_set, meta_set, emb, pos_miRNA, pos_disease, miRNA_index, disease_index, mda):
     def forward(self, sim_set, meta_set, emb, pos_miRNA, pos_disease, miRNA_index, disease_index):
         # mi_emb = self.mi_emb(sim_set, mda, 'yes')
@@ -539,7 +520,6 @@ class SMCLMDA(nn.Module):
 
 
         train_score = self.mlp(mi_emb_, di_emb_, miRNA_index, disease_index)
-        # train_score = self.kan(mi_emb_, di_emb_, miRNA_index, disease_index)
 
         # meta_emb_ = (meta_mi_emb.mm(meta_di_emb.t())).to(device)
         # meta_score = self.mlp(meta_emb_)
